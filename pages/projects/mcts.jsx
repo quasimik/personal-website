@@ -1,11 +1,49 @@
-import Layout, { siteTitle } from '../../components/layout';
+import { useState } from 'react';
+import Layout from '../../components/layout';
+import styles from '/styles/mcts.module.css';
 
 const pageTitle = 'Monte Carlo Tree Search';
 
-function MonteCarloShowcase() {
+function Cell({ value, handler }) {
+  return (
+    <button
+      className={styles.cell}
+      onClick={handler}
+    >
+      {value}
+    </button>
+  )
+}
+
+function ConnectFourMcts() {
+  const [board, setBoard] = useState([
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+  ]);
+
+  let handleCellClick = (i, j) => () => {
+    const nextBoard = board.map((row, ci) => (
+      row.map(( cell, cj ) => (
+        (ci === i && cj === j) ? 1 : cell
+      ))
+    ));
+    setBoard(nextBoard);
+  }
+
   return (
     <>
       <h3>Connect Four</h3>
+      <div className={styles.connectFourGrid}>
+        {board.map(( row, i ) => (
+          row.map(( cell, j ) => (
+            <Cell value={cell} handler={handleCellClick(i, j)} />
+          ))
+        ))}
+      </div>
     </>
   )
 }
@@ -31,7 +69,7 @@ export default function MctsProject() {
         client-side. Six years later in 2023, that is precisely what I have done here. The entire demo runs on your
         browser so I don't have to provision expensive compute for it.
       </p>
-      <MonteCarloShowcase />
+      <ConnectFourMcts />
     </Layout>
   )
 }

@@ -1,0 +1,17 @@
+.cell {
+  height: 48px;
+  width: 48px;
+  border: solid 1px;
+  background-color: inherit;
+  font-size: 24px;
+}
+
+.cell:hover {
+  background-color: #dfd;
+}
+
+.connectFourGrid {
+  display: grid;
+  grid-template-rows: repeat(6, 48px);
+  grid-template-columns: repeat(7, 48px);
+}
