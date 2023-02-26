@@ -7,7 +7,8 @@ import Date from '../components/date';
 import utilStyles from '../styles/utils.module.css';
 
 const projectNames = {
-  'mcts': 'Monte Carlo Tree Search',
+  'halecoin': 'HaleCoin (winner of HackUCI 2018)',
+  'mcts': 'Monte Carlo tree search',
 };
 
 export default function Home() {
