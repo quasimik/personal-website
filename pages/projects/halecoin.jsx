@@ -1,11 +1,24 @@
+import Image from 'next/image';
+
 import Layout from '../../components/layout';
-import styles from '/styles/mcts.module.css';
+import styles from '../../styles/halecoin.module.css';
+import utilStyles from '../../styles/utils.module.css';
 
 const pageTitle = 'HaleCoin';
 
 export default function HaleCoinProject() {
   return (
     <Layout title={pageTitle}>
+      <div className={styles.splash}>
+        <Image
+          priority
+          src="/images/halecoin.jpg"
+          height={256}
+          width={512}
+          alt=""
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
       <p>
         In 2018, I entered and won HackUCI (hosted by the University of California, Irvine) with <a href="https://devpost.com/software/halecoin">HaleCoin</a>. The idea
         was to incentivize people to do pushups by giving them money. The way we verify that they are doing pushups is
