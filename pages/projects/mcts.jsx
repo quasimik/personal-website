@@ -17,18 +17,18 @@ function Cell({ value, handler }) {
 
 function ConnectFourMcts() {
   const [board, setBoard] = useState([
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
   ]);
 
   let handleCellClick = (i, j) => () => {
     const nextBoard = board.map((row, ci) => (
       row.map(( cell, cj ) => (
-        (ci === i && cj === j) ? 1 : cell
+        (ci === i && cj === j) ? '🟡' : cell // 🟡 🔴
       ))
     ));
     setBoard(nextBoard);
@@ -36,7 +36,6 @@ function ConnectFourMcts() {
 
   return (
     <>
-      <h3>Connect Four</h3>
       <div className={styles.connectFourGrid}>
         {board.map(( row, i ) => (
           row.map(( cell, j ) => (
@@ -44,6 +43,13 @@ function ConnectFourMcts() {
           ))
         ))}
       </div>
+      <h3>Explanation</h3>
+      <p>
+        The algorithm runs for 3 seconds each move. I've heatmapped the cells to their next-move pick frequency,
+        which is why the colors jump around after you pick a move. They don't reset completely after every move, as MCTS
+        would have explored some grandchildren nodes of the child node which you just picked, before you picked it.
+        Hover over the cells to see the cumulative simulated wins/picks.
+      </p>
     </>
   )
 }
@@ -51,6 +57,8 @@ function ConnectFourMcts() {
 export default function MctsProject() {
   return (
     <Layout title={pageTitle}>
+      <ConnectFourMcts />
+      <h3>Background</h3>
       <p>
         Monte Carlo tree search (MCTS) is a general game-playing algorithm to find the best move from any given game
         state of any game.
@@ -69,7 +77,6 @@ export default function MctsProject() {
         client-side. Six years later in 2023, that is precisely what I have done here. The entire demo runs on your
         browser so I don't have to provision expensive compute for it.
       </p>
-      <ConnectFourMcts />
     </Layout>
   )
 }
