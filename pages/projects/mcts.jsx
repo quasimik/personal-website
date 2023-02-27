@@ -92,22 +92,25 @@ function ConnectFourMcts() {
   return (
     <>
       <div className={styles.connectFourContainer}>
-        <div className={styles.connectFourGrid}>
-          {gameState.board.map(( row, i ) => (
-            row.map(( cell, j ) => (
-              <Cell
-                key={`${i},${j}`}
-                value={cell}
-                handler={handleCellClick(i, j)}
-                color={getHeatmapColor(i, j, mctsStats)}
-              />
-            ))
-          ))}
+        <div className={styles.connectFourUI}>
+          <div className={styles.connectFourGrid}>
+            {gameState.board.map(( row, i ) => (
+              row.map(( cell, j ) => (
+                <Cell
+                  key={`${i},${j}`}
+                  value={cell}
+                  handler={handleCellClick(i, j)}
+                  color={getHeatmapColor(i, j, mctsStats)}
+                />
+              ))
+            ))}
+          </div>
+          {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
         </div>
         <div className={styles.connectFourStats}>
           {mctsStats &&
             <>
-              <h4>At {opponent} decision:</h4>
+              <h4>MCTS statistics:</h4>
               <p>Total plays: {mctsStats.n_plays}</p>
               <p>{player} wins: {mctsStats.n_wins}</p>
               <p>{opponent} wins: {mctsStats.children.reduce((acc, child) => acc + child.n_wins, 0)}</p>
@@ -115,13 +118,12 @@ function ConnectFourMcts() {
           }
         </div>
       </div>
-      {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
       <h3>Explanation</h3>
       <p>
         The algorithm runs for 1 second each move. I've heatmapped the cells to their next-move pick frequency,
         which is why the colors jump around after you pick a move. They don't reset completely after every move, as MCTS
         would have explored some grandchildren nodes of the child node which you just picked, before you picked it.
-        Hover over the cells to see the cumulative simulated wins/picks.
+        {/*Hover over the cells to see the cumulative simulated wins/picks.*/}
       </p>
     </>
   )
