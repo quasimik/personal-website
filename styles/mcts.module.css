@@ -1,7 +1,7 @@
 .cell {
   border: solid 1px;
   background-color: inherit;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 .cell:hover {
@@ -43,9 +43,9 @@
 
 .connectFourGrid {
   display: grid;
-  place-items: center stretch;
-  grid-template-rows: repeat(6, 2.5em);
-  grid-template-columns: repeat(7, 2.5em);
+  place-items: stretch;
+  grid-template-rows: repeat(6, 2em);
+  grid-template-columns: repeat(7, 2em);
 }
 
 .connectFourStats {
