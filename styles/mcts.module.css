@@ -45,7 +45,6 @@
 
 .connectFourGrid {
   display: grid;
-  place-items: stretch;
   grid-template-rows: repeat(6, 2.5em);
   grid-template-columns: repeat(7, 2.5em);
 }
