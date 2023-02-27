@@ -20,6 +20,8 @@
 
 .connectFourGrid {
   display: grid;
+  justify-items: center;
+  align-items: center;
   grid-template-rows: repeat(6, 48px);
   grid-template-columns: repeat(7, 48px);
 }

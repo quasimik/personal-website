@@ -32,15 +32,21 @@ function ConnectFourMcts({ game }) {
     const initialState = game.start();
     return initialState;
   });
+  const [gameWinner, setGameWinner] = useState(null);
 
   let handleCellClick = (i, j) => () => {
+    if (gameWinner !== null) {
+      return;
+    }
     const play = new Play(i, j);
     const playHash = play.hash();
     const legalPlays = game.legalPlays(gameState);
-    if (legalPlays.some((legalPlay) => legalPlay.hash() === playHash)) {
-      const nextState = game.nextState(gameState, play);
-      setGameState(nextState);
+    if (!legalPlays.some((legalPlay) => legalPlay.hash() === playHash)) {
+      return;
     }
+    const nextState = game.nextState(gameState, play);
+    setGameState(nextState);
+    setGameWinner(game.winner(nextState));
   }
 
   return (
@@ -52,6 +58,7 @@ function ConnectFourMcts({ game }) {
           ))
         ))}
       </div>
+      {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
       <h3>Explanation</h3>
       <p>
         The algorithm runs for 3 seconds each move. I've heatmapped the cells to their next-move pick frequency,
