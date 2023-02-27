@@ -2,42 +2,51 @@ import { useState } from 'react';
 import Layout from '../../components/layout';
 import styles from '/styles/mcts.module.css';
 
+import { Game, Play } from '../../components/mcts'
+
 const pageTitle = 'Monte Carlo Tree Search';
+
+function renderCell(value) {
+  switch (value) {
+    case null:
+      return '';
+    case 1:
+      return '🟡';
+    case -1:
+      return '🔴';
+  }
+}
 
 function Cell({ value, handler }) {
   return (
-    <button
-      className={styles.cell}
-      onClick={handler}
-    >
-      {value}
+    <button className={styles.cell} onClick={handler}>
+      {renderCell(value)}
     </button>
   )
 }
 
-function ConnectFourMcts() {
-  const [board, setBoard] = useState([
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-    ['', '', '', '', '', '', ''],
-  ]);
+// function getHoverColor(legalPlays, hoverCol) {}
+
+function ConnectFourMcts({ game }) {
+  const [gameState, setGameState] = useState(() => {
+    const initialState = game.start();
+    return initialState;
+  });
 
   let handleCellClick = (i, j) => () => {
-    const nextBoard = board.map((row, ci) => (
-      row.map(( cell, cj ) => (
-        (ci === i && cj === j) ? '🟡' : cell // 🟡 🔴
-      ))
-    ));
-    setBoard(nextBoard);
+    const play = new Play(i, j);
+    const playHash = play.hash();
+    const legalPlays = game.legalPlays(gameState);
+    if (legalPlays.some((legalPlay) => legalPlay.hash() === playHash)) {
+      const nextState = game.nextState(gameState, play);
+      setGameState(nextState);
+    }
   }
 
   return (
     <>
       <div className={styles.connectFourGrid}>
-        {board.map(( row, i ) => (
+        {gameState.board.map(( row, i ) => (
           row.map(( cell, j ) => (
             <Cell value={cell} handler={handleCellClick(i, j)} />
           ))
@@ -55,9 +64,10 @@ function ConnectFourMcts() {
 }
 
 export default function MctsProject() {
+  const game = new Game();
   return (
     <Layout title={pageTitle}>
-      <ConnectFourMcts />
+      <ConnectFourMcts game={game} />
       <h3>Background</h3>
       <p>
         Monte Carlo tree search (MCTS) is a general game-playing algorithm to find the best move from any given game
