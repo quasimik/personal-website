@@ -2,7 +2,8 @@ import { useState } from 'react';
 import Layout from '../../components/layout';
 import styles from '/styles/mcts.module.css';
 
-import { Game, Play } from '../../components/mcts'
+import { Game, Play } from '../../components/connect-four'
+import { MonteCarlo } from '../../components/mcts'
 
 const pageTitle = 'Monte Carlo Tree Search';
 
@@ -27,7 +28,7 @@ function Cell({ value, handler }) {
 
 // function getHoverColor(legalPlays, hoverCol) {}
 
-function ConnectFourMcts({ game }) {
+function ConnectFourMcts({ game, mcts }) {
   const [gameState, setGameState] = useState(() => {
     const initialState = game.start();
     return initialState;
@@ -46,7 +47,21 @@ function ConnectFourMcts({ game }) {
     }
     const nextState = game.nextState(gameState, play);
     setGameState(nextState);
-    setGameWinner(game.winner(nextState));
+    const winner = game.winner(nextState);
+    setGameWinner(winner);
+
+    if (winner !== null) {
+      return;
+    }
+
+    // MCTS runs and plays
+    mcts.runSearch(nextState, 1);
+    const mctsPlay = mcts.bestPlay(nextState, 'robust');
+    const nextNextState = game.nextState(nextState, mctsPlay);
+    const mctsWinner = game.winner(nextNextState);
+
+    setGameState(nextNextState);
+    setGameWinner(mctsWinner);
   }
 
   return (
@@ -54,14 +69,14 @@ function ConnectFourMcts({ game }) {
       <div className={styles.connectFourGrid}>
         {gameState.board.map(( row, i ) => (
           row.map(( cell, j ) => (
-            <Cell value={cell} handler={handleCellClick(i, j)} />
+            <Cell key={`${i},${j}`} value={cell} handler={handleCellClick(i, j)} />
           ))
         ))}
       </div>
       {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
       <h3>Explanation</h3>
       <p>
-        The algorithm runs for 3 seconds each move. I've heatmapped the cells to their next-move pick frequency,
+        The algorithm runs for 1 second each move. I've heatmapped the cells to their next-move pick frequency,
         which is why the colors jump around after you pick a move. They don't reset completely after every move, as MCTS
         would have explored some grandchildren nodes of the child node which you just picked, before you picked it.
         Hover over the cells to see the cumulative simulated wins/picks.
@@ -72,9 +87,10 @@ function ConnectFourMcts({ game }) {
 
 export default function MctsProject() {
   const game = new Game();
+  const mcts = new MonteCarlo(game);
   return (
     <Layout title={pageTitle}>
-      <ConnectFourMcts game={game} />
+      <ConnectFourMcts game={game} mcts={mcts} />
       <h3>Background</h3>
       <p>
         Monte Carlo tree search (MCTS) is a general game-playing algorithm to find the best move from any given game
