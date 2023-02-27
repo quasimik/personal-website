@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Layout from '../../components/layout';
 import styles from '/styles/mcts.module.css';
 
@@ -6,21 +6,35 @@ import { Game, Play } from '../../components/connect-four'
 import { MonteCarlo } from '../../components/mcts'
 
 const pageTitle = 'Monte Carlo Tree Search';
+const player = '🟡';
+const opponent = '🔴';
 
 function renderCell(value) {
   switch (value) {
     case null:
       return '';
     case 1:
-      return '🟡';
+      return player;
     case -1:
-      return '🔴';
+      return opponent;
   }
 }
 
-function Cell({ value, handler }) {
+function getHeatmapColor(i, j, mctsStats) {
+  let heat = 0;
+  if (mctsStats !== null) {
+    for (const childNode of mctsStats.children) {
+      if (childNode.play.row === i && childNode.play.col === j) {
+        heat = childNode.n_plays / mctsStats.n_plays
+      }
+    }
+  }
+  return `rgb(255,0,0,${heat})`
+}
+
+function Cell({ value, handler, color }) {
   return (
-    <button className={styles.cell} onClick={handler}>
+    <button className={styles.cell} onClick={handler} style={{ backgroundColor: color }}>
       {renderCell(value)}
     </button>
   )
@@ -28,11 +42,20 @@ function Cell({ value, handler }) {
 
 // function getHoverColor(legalPlays, hoverCol) {}
 
-function ConnectFourMcts({ game, mcts }) {
+function ConnectFourMcts() {
+  const game = useRef(null);
+  if (game.current === null) {
+    game.current = new Game();
+  }
+  const mcts = useRef(null);
+  if (mcts.current === null) {
+    mcts.current = new MonteCarlo(game.current);
+  }
   const [gameState, setGameState] = useState(() => {
-    const initialState = game.start();
+    const initialState = game.current.start();
     return initialState;
   });
+  const [mctsStats, setMctsStats] = useState(null);
   const [gameWinner, setGameWinner] = useState(null);
 
   let handleCellClick = (i, j) => () => {
@@ -41,13 +64,13 @@ function ConnectFourMcts({ game, mcts }) {
     }
     const play = new Play(i, j);
     const playHash = play.hash();
-    const legalPlays = game.legalPlays(gameState);
+    const legalPlays = game.current.legalPlays(gameState);
     if (!legalPlays.some((legalPlay) => legalPlay.hash() === playHash)) {
       return;
     }
-    const nextState = game.nextState(gameState, play);
+    const nextState = game.current.nextState(gameState, play);
     setGameState(nextState);
-    const winner = game.winner(nextState);
+    const winner = game.current.winner(nextState);
     setGameWinner(winner);
 
     if (winner !== null) {
@@ -55,23 +78,42 @@ function ConnectFourMcts({ game, mcts }) {
     }
 
     // MCTS runs and plays
-    mcts.runSearch(nextState, 1);
-    const mctsPlay = mcts.bestPlay(nextState, 'robust');
-    const nextNextState = game.nextState(nextState, mctsPlay);
-    const mctsWinner = game.winner(nextNextState);
+    mcts.current.runSearch(nextState, 1);
+    const mctsStats = mcts.current.getStats(nextState);
+    const mctsPlay = mcts.current.bestPlay(nextState, 'robust');
+    const nextNextState = game.current.nextState(nextState, mctsPlay);
+    const mctsWinner = game.current.winner(nextNextState);
 
+    setMctsStats(mctsStats);
     setGameState(nextNextState);
     setGameWinner(mctsWinner);
   }
 
   return (
     <>
-      <div className={styles.connectFourGrid}>
-        {gameState.board.map(( row, i ) => (
-          row.map(( cell, j ) => (
-            <Cell key={`${i},${j}`} value={cell} handler={handleCellClick(i, j)} />
-          ))
-        ))}
+      <div className={styles.connectFourContainer}>
+        <div className={styles.connectFourGrid}>
+          {gameState.board.map(( row, i ) => (
+            row.map(( cell, j ) => (
+              <Cell
+                key={`${i},${j}`}
+                value={cell}
+                handler={handleCellClick(i, j)}
+                color={getHeatmapColor(i, j, mctsStats)}
+              />
+            ))
+          ))}
+        </div>
+        <div className={styles.connectFourStats}>
+          {mctsStats &&
+            <>
+              <h4>At {opponent} decision:</h4>
+              <p>Total plays: {mctsStats.n_plays}</p>
+              <p>{player} wins: {mctsStats.n_wins}</p>
+              <p>{opponent} wins: {mctsStats.children.reduce((acc, child) => acc + child.n_wins, 0)}</p>
+            </>
+          }
+        </div>
       </div>
       {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
       <h3>Explanation</h3>
@@ -86,11 +128,9 @@ function ConnectFourMcts({ game, mcts }) {
 }
 
 export default function MctsProject() {
-  const game = new Game();
-  const mcts = new MonteCarlo(game);
   return (
     <Layout title={pageTitle}>
-      <ConnectFourMcts game={game} mcts={mcts} />
+      <ConnectFourMcts />
       <h3>Background</h3>
       <p>
         Monte Carlo tree search (MCTS) is a general game-playing algorithm to find the best move from any given game

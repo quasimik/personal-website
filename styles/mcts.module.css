@@ -18,10 +18,22 @@
   background-color: #afa;
 }*/
 
+.connectFourContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .connectFourGrid {
+  margin: 0 10px;
   display: grid;
   justify-items: center;
   align-items: center;
   grid-template-rows: repeat(6, 48px);
   grid-template-columns: repeat(7, 48px);
+}
+
+.connectFourStats {
+  margin: 0 10px;
+  line-height: 12px;
 }
