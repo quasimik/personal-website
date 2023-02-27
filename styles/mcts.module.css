@@ -1,11 +1,9 @@
 .cell {
   margin: 0;
   padding: 0;
-  text-indent: 0;
   border: solid 1px;
   background-color: inherit;
   font-size: 1.5em;
-  text-align: center;
 }
 
 .cell:hover {
