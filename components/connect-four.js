@@ -59,6 +59,17 @@ class Game {
     return new State(newHistory, newBoard, newPlayer)
   }
 
+  /** Retreat the given state and return it. */
+  prevState(state) {
+    const play = state.playHistory.at(-1)
+    const newHistory = state.playHistory.slice(0, -1) // 1-deep copy
+    let newBoard = state.board.map((row) => row.slice())
+    newBoard[play.row][play.col] = 0
+    const newPlayer = -state.player
+
+    return new State(newHistory, newBoard, newPlayer)
+  }
+
   /** Return the winner of the game. */
   winner(state) {
 

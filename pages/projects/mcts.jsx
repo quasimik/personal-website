@@ -47,6 +47,10 @@ function ConnectFourMcts() {
   if (game.current === null) {
     game.current = new Game();
   }
+  const reachedStates = useRef(null);
+  if (reachedStates.current === null) {
+    reachedStates.current = new Set();
+  }
   const mcts = useRef(null);
   if (mcts.current === null) {
     mcts.current = new MonteCarlo(game.current);
@@ -58,7 +62,7 @@ function ConnectFourMcts() {
   const [mctsStats, setMctsStats] = useState(null);
   const [gameWinner, setGameWinner] = useState(null);
 
-  let handleCellClick = (i, j) => () => {
+  const handleCellClick = (i, j) => () => {
     if (gameWinner !== null) {
       return;
     }
@@ -70,23 +74,43 @@ function ConnectFourMcts() {
     }
     const nextState = game.current.nextState(gameState, play);
     setGameState(nextState);
-    const winner = game.current.winner(nextState);
-    setGameWinner(winner);
+    const nextWinner = game.current.winner(nextState);
+    setGameWinner(nextWinner);
 
-    if (winner !== null) {
+    if (nextWinner !== null) {
       return;
     }
 
     // MCTS runs and plays
-    mcts.current.runSearch(nextState, 1);
-    const mctsStats = mcts.current.getStats(nextState);
-    const mctsPlay = mcts.current.bestPlay(nextState, 'robust');
-    const nextNextState = game.current.nextState(nextState, mctsPlay);
-    const mctsWinner = game.current.winner(nextNextState);
+    if (!reachedStates.current.has(nextState.hash())) {
+      mcts.current.runSearch(nextState, 1);
+      reachedStates.current.add(nextState.hash());
+    }
+    const nextStats = mcts.current.getStats(nextState);
+    setMctsStats(nextStats);
 
-    setMctsStats(mctsStats);
+    const nextPlay = mcts.current.bestPlay(nextState, 'robust');
+    const nextNextState = game.current.nextState(nextState, nextPlay);
+    const nextNextWinner = game.current.winner(nextNextState);
+
     setGameState(nextNextState);
-    setGameWinner(mctsWinner);
+    setGameWinner(nextNextWinner);
+  }
+
+  const handleUndoClick = () => {
+    const prevState = game.current.prevState(gameState);
+    const prevPrevState = game.current.prevState(prevState);
+    setGameState(prevPrevState);
+    const prevPrevWinner = game.current.winner(prevPrevState);
+    setGameWinner(prevPrevWinner);
+    if (prevPrevState.playHistory.length > 0) {
+      const prevPrevPrevState = game.current.prevState(prevPrevState);
+      const prevStats = mcts.current.getStats(prevPrevPrevState);
+      setMctsStats(prevStats);
+    }
+    else {
+      setMctsStats(null);
+    }
   }
 
   return (
@@ -105,12 +129,13 @@ function ConnectFourMcts() {
               ))
             ))}
           </div>
-          {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
+          {gameState.playHistory.length > 0 && <p className={styles.undoButton} onClick={handleUndoClick}>Undo last move</p>}
+          {gameWinner && <p className={styles.winner}>Winner: {renderCell(gameWinner)}</p>}
         </div>
         <div className={styles.connectFourStats}>
+          <h4>State MCTS statistics:</h4>
           {mctsStats &&
             <>
-              <h4>MCTS statistics:</h4>
               <p>Total plays: {mctsStats.n_plays}</p>
               <p>{player} wins: {mctsStats.n_wins}</p>
               <p>{opponent} wins: {mctsStats.children.reduce((acc, child) => acc + child.n_wins, 0)}</p>
@@ -123,8 +148,15 @@ function ConnectFourMcts() {
         The algorithm runs for 1 second each move. I've heatmapped the cells to their next-move pick frequency,
         which is why the colors jump around after you pick a move. They don't reset completely after every move, as MCTS
         would have explored some grandchildren nodes of the child node which you just picked, before you picked it.
-        {/*Hover over the cells to see the cumulative simulated wins/picks.*/}
       </p>
+      <p>
+        Undo moves 2 states back so you can try playing a different move. I track previously reached states and don't
+        run MCTS search on these, so every state only gets 1 second of compute even if you reach them multiple times
+        using undos. One annoying thing is that because I don't track updates to the MCTS statistics (I only track
+        updates to the game state), the statistics accumulate to shared ancestors with undos. This manifests as super
+        red heatmap cells after you undo to some ancestor after playing a bunch of its descendants.
+      </p>
+      {/*<p>Hover over the cells to see the cumulative simulated wins/picks.</p>*/}
     </>
   )
 }

@@ -18,6 +18,20 @@
   background-color: #afa;
 }*/
 
+.undoButton {
+  float: left;
+  color: #0070f3;
+  cursor: pointer;
+}
+
+.undoButton:hover {
+  text-decoration: underline;
+}
+
+.winner {
+  float: right;
+}
+
 .connectFourContainer {
   display: flex;
   flex-direction: row;
@@ -26,11 +40,10 @@
 }
 
 .connectFourUI {
-  text-align: center;
+  margin: 0 10px;
 }
 
 .connectFourGrid {
-  margin: 0 10px;
   display: grid;
   justify-items: center;
   align-items: center;
