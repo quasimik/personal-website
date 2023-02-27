@@ -1,8 +1,10 @@
 .cell {
   margin: 0;
+  padding: 0;
+  text-indent: 0;
   border: solid 1px;
   background-color: inherit;
-  font-size: 1em;
+  font-size: 1.5em;
   text-align: center;
 }
 
@@ -46,8 +48,8 @@
 .connectFourGrid {
   display: grid;
   place-items: stretch;
-  grid-template-rows: repeat(6, 2em);
-  grid-template-columns: repeat(7, 2em);
+  grid-template-rows: repeat(6, 2.5em);
+  grid-template-columns: repeat(7, 2.5em);
 }
 
 .connectFourStats {
