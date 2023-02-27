@@ -143,14 +143,25 @@ function ConnectFourMcts() {
           }
         </div>
       </div>
-      <h3>Explanation</h3>
+      <h3>Instructions</h3>
+      <p>
+        This is Connect Four, a game where you and an opponent take turns placing coins down in slots, and the first to
+        form a run of 4 coins wins. The 4 coins in a winning run can be horizontal, vertical, or diagonal. The coins
+        fall down each column due to gravity, so you can only place them on the bottom-most empty slot in each column.
+        You are yellow {player} and your AI opponent is red {opponent}.
+      </p>
+      <p>
+        To begin, click on any bottom-most slot in any column. Your AI opponent will think and play a counter-move
+        automatically. You take turns until someone wins, and you can undo your moves to try playing different ones.
+      </p>
+      <h3>Technical details</h3>
       <p>
         The algorithm runs for 1 second each move. I've heatmapped the cells to their next-move pick frequency,
         which is why the colors jump around after you pick a move. They don't reset completely after every move, as MCTS
         would have explored some grandchildren nodes of the child node which you just picked, before you picked it.
       </p>
       <p>
-        Undo moves 2 states back so you can try playing a different move. I track previously reached states and don't
+        Undo moves 2 states back so you can try playing different moves. I track previously reached states and don't
         run MCTS search on these, so every state only gets 1 second of compute even if you reach them multiple times
         using undos. One annoying thing is that because I don't track updates to the MCTS statistics (I only track
         updates to the game state), the statistics accumulate to shared ancestors with undos. This manifests as super
