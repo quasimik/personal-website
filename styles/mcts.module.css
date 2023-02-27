@@ -1,9 +1,7 @@
 .cell {
-  height: 100%;
-  width: 100%;
   border: solid 1px;
   background-color: inherit;
-  font-size: 150%;
+  font-size: 1.5em;
 }
 
 .cell:hover {
@@ -45,7 +43,6 @@
 
 .connectFourGrid {
   display: grid;
-  place-items: center;
   grid-template-rows: repeat(6, 2.5em);
   grid-template-columns: repeat(7, 2.5em);
 }
