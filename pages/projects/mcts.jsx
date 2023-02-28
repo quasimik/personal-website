@@ -26,11 +26,14 @@ function renderCell(value) {
 function getHeatmapColor(i, j, mctsStats) {
   let heat = 0;
   if (mctsStats !== null) {
+    let totalWins = 0;
     for (const childNode of mctsStats.children) {
+      totalWins += childNode.n_wins;
       if (childNode.play.row === i && childNode.play.col === j) {
-        heat = childNode.n_wins / mctsStats.n_wins
+        heat = childNode.n_wins;
       }
     }
+    heat /= totalWins;
   }
   return `rgb(255,0,0,${heat})`
 }
