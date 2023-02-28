@@ -64,27 +64,32 @@ function ConnectFourMcts() {
   });
   const [mctsStats, setMctsStats] = useState(null);
   const [gameWinner, setGameWinner] = useState(null);
+  const [waitForInput, setWaitForInput] = useState(true);
 
+  /**
+   * Autoplay
+   */
   useEffect(() => {
-    if (!(gameWinner === null && gameState.player === -1)) {
+    if (gameWinner !== null || waitForInput) {
       return;
     }
     setTimeout(() => {
       if (!reachedStates.current.has(gameState.hash())) {
-          mcts.current.runSearch(gameState, 1);
-          reachedStates.current.add(gameState.hash());
+        mcts.current.runSearch(gameState, 1);
+        reachedStates.current.add(gameState.hash());
       }
       const nextStats = mcts.current.getStats(gameState);
       setMctsStats(nextStats);
 
-      const play = mcts.current.bestPlay(gameState, 'robust');
+      const play = mcts.current.bestPlay(gameState, 'max');
 
       const nextState = game.current.nextState(gameState, play);
       const nextWinner = game.current.winner(nextState);
       setGameState(nextState);
       setGameWinner(nextWinner);
-    }, 0);
-  }, [gameWinner, gameState]);
+      setWaitForInput(nextState.player === 1);
+    }, 100);
+  }, [waitForInput, gameWinner, gameState]);
 
   const handleCellClick = (i, j) => () => {
     if (!(gameWinner === null && gameState.player === 1)) {
@@ -101,6 +106,7 @@ function ConnectFourMcts() {
     const nextWinner = game.current.winner(nextState);
     setGameState(nextState);
     setGameWinner(nextWinner);
+    setWaitForInput(false);
   }
 
   const handleUndoClick = () => {
@@ -127,12 +133,17 @@ function ConnectFourMcts() {
     setGameState(initialState);
     setMctsStats(null);
     setGameWinner(null);
+    setWaitForInput(true);
+  }
+
+  const handleAutoClick = () => {
+    setWaitForInput(false);
   }
 
   return (
     <>
       <div className={styles.connectFourContainer}>
-        <div className={styles.connectFourUI}>
+        <div className={styles.connectFourLeft}>
           <div className={styles.connectFourGrid}>
             {gameState.board.map(( row, i ) => (
               row.map(( cell, j ) => (
@@ -145,22 +156,32 @@ function ConnectFourMcts() {
               ))
             ))}
           </div>
-          <p className={styles.textControls}>
-            {(gameWinner || gameState.player === 1) && gameState.playHistory.length > 0 ? (
-              <span className={styles.textButton} onClick={handleUndoClick}>Undo</span>
-            ) : (
-              <span>Undo</span>
-            )}
-            &ensp;or&ensp;
-            {reachedStates.current.size > 0 ? (
-              <span className={styles.textButton} onClick={handleResetClick}>Reset</span>
-            ) : (
-              <span>Reset</span>
-            )}
-          </p>
-          {gameWinner && <p className={styles.winner}>Winner: {renderCell(gameWinner)}</p>}
+          <div className={styles.textArea}>
+            <p className={styles.textControls}>
+              {gameWinner || waitForInput && reachedStates.current.size > 0 ? (
+                <span className={styles.textButton} onClick={handleResetClick}>Reset</span>
+              ) : (
+                <span>Reset</span>
+              )}
+              &ensp;•&ensp;
+              {gameWinner || waitForInput && gameState.playHistory.length > 0 ? (
+                <span className={styles.textButton} onClick={handleUndoClick}>Undo</span>
+              ) : (
+                <span>Undo</span>
+              )}
+              &ensp;•&ensp;
+              {gameWinner || gameState.player === -1 ? (
+                <span>Auto</span>
+              ) : waitForInput ? (
+                <span className={styles.textButton} onClick={handleAutoClick}>Auto</span>
+              ) : (
+                <PulseLoader size='0.4em' />
+              )}
+            </p>
+            {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
+          </div>
         </div>
-        <div className={styles.connectFourStats}>
+        <div className={styles.connectFourRight}>
           <h4>State MCTS statistics:</h4>
           {!gameWinner && gameState.player === -1 ? (
             <PulseLoader />

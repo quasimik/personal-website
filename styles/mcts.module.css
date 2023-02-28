@@ -1,3 +1,31 @@
+
+/*.hoverCol {
+  background-color: #dfd;
+}
+
+.hoverColCell {
+  background-color: #afa;
+}*/
+
+.connectFourContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.connectFourLeft {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px;
+}
+
+.connectFourGrid {
+  display: grid;
+  grid-template-rows: repeat(6, 2.5em);
+  grid-template-columns: repeat(7, 2.5em);
+}
+
 .cell {
   margin: 0;
   padding: 0;
@@ -10,16 +38,15 @@
   background-color: #dfd;
 }
 
-/*.hoverCol {
-  background-color: #dfd;
+.textArea {
+  display: flex;
+  justify-content: space-between;
 }
 
-.hoverColCell {
-  background-color: #afa;
-}*/
-
 .textControls {
-  float: left;
+  display: flex;
+  justify-content: left;
+  align-items: center;
   user-select: none;
 }
 
@@ -32,28 +59,7 @@
   text-decoration: underline;
 }
 
-.winner {
-  float: right;
-}
-
-.connectFourContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.connectFourUI {
-  margin: 0 10px;
-}
-
-.connectFourGrid {
-  display: grid;
-  grid-template-rows: repeat(6, 2.5em);
-  grid-template-columns: repeat(7, 2.5em);
-}
-
-.connectFourStats {
+.connectFourRight {
   margin: 0 10px;
   line-height: 12px;
   height: 8em;
