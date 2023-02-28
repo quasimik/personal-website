@@ -18,13 +18,17 @@
   background-color: #afa;
 }*/
 
-.undoButton {
+.textControls {
   float: left;
+  user-select: none;
+}
+
+.textButton {
   color: #0070f3;
   cursor: pointer;
 }
 
-.undoButton:hover {
+.textButton:hover {
   text-decoration: underline;
 }
 

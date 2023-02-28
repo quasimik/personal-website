@@ -118,6 +118,16 @@ function ConnectFourMcts() {
     }
   }
 
+  const handleResetClick = () => {
+    game.current = new Game();
+    reachedStates.current = new Set();
+    mcts.current = new MonteCarlo(game.current);
+    const initialState = game.current.start();
+    setGameState(initialState);
+    setMctsStats(null);
+    setGameWinner(null);
+  }
+
   return (
     <>
       <div className={styles.connectFourContainer}>
@@ -134,13 +144,25 @@ function ConnectFourMcts() {
               ))
             ))}
           </div>
-          {gameState.playHistory.length > 0 && <p className={styles.undoButton} onClick={handleUndoClick}>Undo last move</p>}
+          <p className={styles.textControls}>
+            {gameState.player === 1 && gameState.playHistory.length > 0 ? (
+              <span className={styles.textButton} onClick={handleUndoClick}>Undo</span>
+            ) : (
+              <span>Undo</span>
+            )}
+            &ensp;or&ensp;
+            {reachedStates.current.size > 0 ? (
+              <span className={styles.textButton} onClick={handleResetClick}>Reset</span>
+            ) : (
+              <span>Reset</span>
+            )}
+          </p>
           {gameWinner && <p className={styles.winner}>Winner: {renderCell(gameWinner)}</p>}
         </div>
         <div className={styles.connectFourStats}>
           <h4>State MCTS statistics:</h4>
           {gameState.player === -1 ? (
-            <PulseLoader style={{ alignSelf: 'center' }} />
+            <PulseLoader />
           ) : (
             mctsStats && (
               <>
