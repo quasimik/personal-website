@@ -28,7 +28,7 @@ function getHeatmapColor(i, j, mctsStats) {
   if (mctsStats !== null) {
     for (const childNode of mctsStats.children) {
       if (childNode.play.row === i && childNode.play.col === j) {
-        heat = childNode.n_plays / mctsStats.n_plays
+        heat = childNode.n_wins / mctsStats.n_wins
       }
     }
   }
@@ -141,62 +141,71 @@ function ConnectFourMcts() {
   }
 
   return (
-    <>
-      <div className={styles.connectFourContainer}>
-        <div className={styles.connectFourLeft}>
-          <div className={styles.connectFourGrid}>
-            {gameState.board.map(( row, i ) => (
-              row.map(( cell, j ) => (
-                <Cell
-                  key={`${i},${j}`}
-                  value={cell}
-                  handler={handleCellClick(i, j)}
-                  color={getHeatmapColor(i, j, mctsStats)}
-                />
-              ))
-            ))}
-          </div>
-          <div className={styles.textArea}>
-            <p className={styles.textControls}>
-              {gameWinner || waitForInput && reachedStates.current.size > 0 ? (
-                <span className={styles.textButton} onClick={handleResetClick}>Reset</span>
-              ) : (
-                <span>Reset</span>
-              )}
-              &ensp;•&ensp;
-              {gameWinner || waitForInput && gameState.playHistory.length > 0 ? (
-                <span className={styles.textButton} onClick={handleUndoClick}>Undo</span>
-              ) : (
-                <span>Undo</span>
-              )}
-              &ensp;•&ensp;
-              {gameWinner || gameState.player === -1 ? (
-                <span>Auto</span>
-              ) : waitForInput ? (
-                <span className={styles.textButton} onClick={handleAutoClick}>Auto</span>
-              ) : (
-                <PulseLoader size='0.4em' />
-              )}
-            </p>
-            {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
-          </div>
+    <div className={styles.connectFourContainer}>
+      <div className={styles.connectFourLeft}>
+        <div className={styles.connectFourGrid}>
+          {gameState.board.map(( row, i ) => (
+            row.map(( cell, j ) => (
+              <Cell
+                key={`${i},${j}`}
+                value={cell}
+                handler={handleCellClick(i, j)}
+                color={getHeatmapColor(i, j, mctsStats)}
+              />
+            ))
+          ))}
         </div>
-        <div className={styles.connectFourRight}>
-          <h4>State MCTS statistics:</h4>
-          {!gameWinner && gameState.player === -1 ? (
-            <PulseLoader />
-          ) : (
-            mctsStats && (
-              <>
-                <p>Total plays: {mctsStats.n_plays}</p>
-                <p>{player} wins: {mctsStats.n_wins}</p>
-                <p>{opponent} wins: {mctsStats.children.reduce((acc, child) => acc + child.n_wins, 0)}</p>
-              </>
-            )
-          )}
+        <div className={styles.textArea}>
+          <p className={styles.textControls}>
+            {gameWinner || waitForInput && reachedStates.current.size > 0 ? (
+              <span className={styles.textButton} onClick={handleResetClick}>Reset</span>
+            ) : (
+              <span>Reset</span>
+            )}
+            &ensp;•&ensp;
+            {gameWinner || waitForInput && gameState.playHistory.length > 0 ? (
+              <span className={styles.textButton} onClick={handleUndoClick}>Undo</span>
+            ) : (
+              <span>Undo</span>
+            )}
+            &ensp;•&ensp;
+            {gameWinner || gameState.player === -1 ? (
+              <span>AutoPlay</span>
+            ) : waitForInput ? (
+              <span className={styles.textButton} onClick={handleAutoClick}>AutoPlay</span>
+            ) : (
+              <PulseLoader size='0.4em' />
+            )}
+          </p>
+          {gameWinner && <p>Winner: {renderCell(gameWinner)}</p>}
         </div>
       </div>
-      <h3>Instructions</h3>
+      <div className={styles.connectFourRight}>
+        <h4>State MCTS statistics:</h4>
+        {!gameWinner && gameState.player === -1 ? (
+          <PulseLoader />
+        ) : (
+          mctsStats && (
+            <>
+              <p>Total plays: {mctsStats.n_plays}</p>
+              <p>{player} wins: {mctsStats.n_wins}</p>
+              <p>{opponent} wins: {mctsStats.children.reduce((acc, child) => acc + child.n_wins, 0)}</p>
+            </>
+          )
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default function MctsProject() {
+  return (
+    <Layout title={pageTitle}>
+      <ConnectFourMcts />
+      <h3>How to play</h3>
+      <p>
+        To begin, click on any bottom-most slot in any column.
+      </p>
       <p>
         This is Connect Four, a game where you and an opponent take turns placing coins down in slots, and the first to
         form a run of 4 coins wins. The 4 coins in a winning run can be horizontal, vertical, or diagonal. The coins
@@ -212,31 +221,31 @@ function ConnectFourMcts() {
         />
       </div>
       <p>
-        To begin, click on any bottom-most slot in any column. Your AI opponent will think and play a counter-move
-        automatically. You take turns until someone wins, and you can undo your moves to try playing different ones.
+        After every move, Your AI opponent will think and play a counter-move automatically, and you take turns until
+        someone wins. You can auto-play moves, and you can undo your moves to try playing different ones.
       </p>
-      <h3>Technical details</h3>
+      <h3>What is this?</h3>
       <p>
-        The algorithm runs for 1 second each move. I've heatmapped the cells to their next-move pick frequency,
-        which is why the colors jump around after you pick a move. They don't reset completely after every move, as MCTS
-        would have explored some grandchildren nodes of the child node which you just picked, before you picked it.
+        This is a technical demo of a game-playing algorithm called Monte Carlo tree search (MCTS). I've chosen to use
+        Connect Four as the game, although MCTS is a general algorithm that can be applied to any game. The AI opponent {opponent} here
+        "thinks" by running MCTS search for 1 second before making each move. For every move, the valid next-move cells
+        are heatmapped to their simulated win frequency, which intuitively corresponds to how good MCTS estimates that
+        move to be.
       </p>
       <p>
-        Undo moves 2 states back so you can try playing different moves. I track previously reached states and don't
-        run MCTS search on these, so every state only gets 1 second of compute even if you reach them multiple times
+        <b><tt>AutoPlay</tt></b> uses MCTS to pick a move for yourself {player}. Because <tt>AutoPlay</tt> and opponent
+        moves share one MCTS instance, you benefit from previous searches on ancestor nodes originally performed for the
+        benefit of the opponent {opponent}. Similarly, it will benefit descendant nodes regardless of the player.
+      </p>
+      <p>
+        <b><tt>Undo</tt></b> moves 2 states back so you can try playing different moves. I don't re-run MCTS search on
+        previously reached states, so every state only gets 1 second of compute even if you reach them multiple times
         using undos. One annoying thing is that because I don't track updates to the MCTS statistics (I only track
         updates to the game state), the statistics accumulate to shared ancestors with undos. This manifests as super
-        red heatmap cells after you undo to some ancestor after playing a bunch of its descendants.
+        red heatmap cells if you undo to some ancestor after playing a bunch of its descendants.
+
       </p>
       {/*<p>Hover over the cells to see the cumulative simulated wins/picks.</p>*/}
-    </>
-  )
-}
-
-export default function MctsProject() {
-  return (
-    <Layout title={pageTitle}>
-      <ConnectFourMcts />
       <h3>Background</h3>
       <p>
         Monte Carlo tree search (MCTS) is a general game-playing algorithm to find the best move from any given game
@@ -245,16 +254,22 @@ export default function MctsProject() {
       <p>
         In 2017, I wrote a <a href="https://medium.com/@quasimik/monte-carlo-tree-search-applied-to-letterpress-34f41c86e238">
         Medium article</a> explaining the idea behind MCTS, and <a href="https://medium.com/@quasimik/implementing-monte-carlo-tree-search-in-node-js-5f07595104df">
-        another one</a> going through a JavaScript implementation. MCTS is one of those deep algorithm things that benefit from high performance, which JS isn't known for. I reasoned at the time
-        that, since I'm running the project on Node.js, Chrome's V8 engine would be good enough. While it did take me
-        down a minor rabbit hole of JIT optimization, it ran quickly enough for the algorithm to self-play a tree that beats me
-        convincingly at connect four.
+        another one</a> going through a JavaScript implementation. For a deeper dive into MCTS, please read those
+        articles.
+      </p>
+      <p>
+        MCTS is one of those deep algorithm things that benefit from high performance, which JS isn't known for. I
+        reasoned at the time that, since I'm running the project on Node.js, Chrome's V8 JS engine would give me good
+        enough performance. While it did take me down a minor rabbit hole of JIT optimization, it actually ran well
+        enough for the algorithm to self-play a tree that beats me convincingly at connect four.
       </p>
       <p>
         The real reason I did it in JS was because it was the language I was most comfortable with at the time. However,
         I did foresee that implementing it in JS would theoretically allow me to run an interactive MCTS demo
-        client-side. Six years later in 2023, that is precisely what I have done here. The entire demo runs on your
-        browser so I don't have to provision expensive compute for it.
+        client-side, but I was too lazy to deal with setting up a whole web stack just to showcase it. Six years later
+        in 2023, the React ecosystem has developed to the point of extremely mature and well-designed frameworks and
+        deployment solutions (i.e. Next.js + Vercel), and they take care of enough annoying details that I managed to
+        implement this in 2 days. The entire demo runs on your browser.
       </p>
     </Layout>
   )
