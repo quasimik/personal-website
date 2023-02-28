@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import Layout from '../../components/layout';
 import styles from '/styles/mcts.module.css';
 
-import { Game, Play } from '../../components/connect-four'
-import { MonteCarlo } from '../../components/mcts'
+import { PulseLoader } from 'react-spinners';
+
+import { Game, Play } from '../../components/connect-four';
+import { MonteCarlo } from '../../components/mcts';
 
 const pageTitle = 'Monte Carlo Tree Search';
 const player = '🟡';
@@ -137,13 +139,17 @@ function ConnectFourMcts() {
         </div>
         <div className={styles.connectFourStats}>
           <h4>State MCTS statistics:</h4>
-          {mctsStats &&
-            <>
-              <p>Total plays: {mctsStats.n_plays}</p>
-              <p>{player} wins: {mctsStats.n_wins}</p>
-              <p>{opponent} wins: {mctsStats.children.reduce((acc, child) => acc + child.n_wins, 0)}</p>
-            </>
-          }
+          {gameState.player === -1 ? (
+            <PulseLoader style={{ alignSelf: 'center' }} />
+          ) : (
+            mctsStats && (
+              <>
+                <p>Total plays: {mctsStats.n_plays}</p>
+                <p>{player} wins: {mctsStats.n_wins}</p>
+                <p>{opponent} wins: {mctsStats.children.reduce((acc, child) => acc + child.n_wins, 0)}</p>
+              </>
+            )
+          )}
         </div>
       </div>
       <h3>Instructions</h3>
