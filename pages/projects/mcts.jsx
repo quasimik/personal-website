@@ -146,7 +146,7 @@ function ConnectFourMcts() {
             ))}
           </div>
           <p className={styles.textControls}>
-            {gameState.player === 1 && gameState.playHistory.length > 0 ? (
+            {(gameWinner || gameState.player === 1) && gameState.playHistory.length > 0 ? (
               <span className={styles.textButton} onClick={handleUndoClick}>Undo</span>
             ) : (
               <span>Undo</span>
@@ -162,7 +162,7 @@ function ConnectFourMcts() {
         </div>
         <div className={styles.connectFourStats}>
           <h4>State MCTS statistics:</h4>
-          {gameState.player === -1 ? (
+          {!gameWinner && gameState.player === -1 ? (
             <PulseLoader />
           ) : (
             mctsStats && (
