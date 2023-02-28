@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Layout from '../../components/layout';
 import styles from '/styles/mcts.module.css';
 
@@ -62,10 +62,32 @@ function ConnectFourMcts() {
   const [mctsStats, setMctsStats] = useState(null);
   const [gameWinner, setGameWinner] = useState(null);
 
-  const handleCellClick = (i, j) => () => {
-    if (gameWinner !== null) {
+  useEffect(() => {
+    if (!(gameWinner === null && gameState.player === -1)) {
       return;
     }
+    setTimeout(() => {
+      if (!reachedStates.current.has(gameState.hash())) {
+          mcts.current.runSearch(gameState, 1);
+          reachedStates.current.add(gameState.hash());
+      }
+      const nextStats = mcts.current.getStats(gameState);
+      setMctsStats(nextStats);
+
+      const play = mcts.current.bestPlay(gameState, 'robust');
+
+      const nextState = game.current.nextState(gameState, play);
+      const nextWinner = game.current.winner(nextState);
+      setGameState(nextState);
+      setGameWinner(nextWinner);
+    }, 0);
+  }, [gameWinner, gameState]);
+
+  const handleCellClick = (i, j) => () => {
+    if (!(gameWinner === null && gameState.player === 1)) {
+      return;
+    }
+
     const play = new Play(i, j);
     const playHash = play.hash();
     const legalPlays = game.current.legalPlays(gameState);
@@ -73,28 +95,9 @@ function ConnectFourMcts() {
       return;
     }
     const nextState = game.current.nextState(gameState, play);
-    setGameState(nextState);
     const nextWinner = game.current.winner(nextState);
+    setGameState(nextState);
     setGameWinner(nextWinner);
-
-    if (nextWinner !== null) {
-      return;
-    }
-
-    // MCTS runs and plays
-    if (!reachedStates.current.has(nextState.hash())) {
-      mcts.current.runSearch(nextState, 1);
-      reachedStates.current.add(nextState.hash());
-    }
-    const nextStats = mcts.current.getStats(nextState);
-    setMctsStats(nextStats);
-
-    const nextPlay = mcts.current.bestPlay(nextState, 'robust');
-    const nextNextState = game.current.nextState(nextState, nextPlay);
-    const nextNextWinner = game.current.winner(nextNextState);
-
-    setGameState(nextNextState);
-    setGameWinner(nextNextWinner);
   }
 
   const handleUndoClick = () => {
