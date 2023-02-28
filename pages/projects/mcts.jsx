@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import { PulseLoader } from 'react-spinners';
 import Layout from '../../components/layout';
 import styles from '/styles/mcts.module.css';
-
-import { PulseLoader } from 'react-spinners';
+import utilStyles from '/styles/utils.module.css';
 
 import { Game, Play } from '../../components/connect-four';
 import { MonteCarlo } from '../../components/mcts';
@@ -181,6 +182,14 @@ function ConnectFourMcts() {
         fall down each column due to gravity, so you can only place them on the bottom-most empty slot in each column.
         You are yellow {player} and your AI opponent is red {opponent}.
       </p>
+      <div className={utilStyles.centeredContainer}>
+        <Image
+          src="/images/connect-four.webp"
+          height={384}
+          width={384}
+          alt=""
+        />
+      </div>
       <p>
         To begin, click on any bottom-most slot in any column. Your AI opponent will think and play a counter-move
         automatically. You take turns until someone wins, and you can undo your moves to try playing different ones.
