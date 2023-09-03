@@ -6,8 +6,9 @@ import Date from '../components/date';
 import utilStyles from '../styles/utils.module.css';
 
 const projectNames = {
-  'halecoin': 'HaleCoin (winner of HackUCI 2018)',
+  'family': 'Family tree organizer',
   'mcts': 'Monte Carlo tree search',
+  'halecoin': 'HaleCoin (winner of HackUCI 2018)',
 };
 
 export default function Home() {
