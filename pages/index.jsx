@@ -14,12 +14,12 @@ export default function Home() {
   return (
     <Layout home>
       <section className={utilStyles.headingMd}>
-        <p>I currently work as a full-stack data scientist with <a href="https://www.woflow.com">Woflow</a>, an
-          early-stage startup revolutionizing data exchange between restaurants and food delivery platforms.
+        <p>I currently work as a full-stack data scientist with
+          <a href="https://www.woflow.com">Woflow</a>, an early-stage startup revolutionizing data
+          exchange between restaurants and food delivery platforms.
         </p>
         <p>
-          My long-term goal is to work on interesting problems in
-          artificial intelligence, and right now, I see neurosymbolic AI to be a promising path in that direction.
+          My long-term goal is to work on interesting problems in artificial intelligence.
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
