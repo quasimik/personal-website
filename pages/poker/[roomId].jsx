@@ -86,6 +86,11 @@ export default function PokerRoom() {
       if (response.ok) {
         setIsJoined(true);
         localStorage.setItem('pokerUserName', userName.trim());
+        // Save to room history
+        const roomHistory = JSON.parse(localStorage.getItem('pokerRoomHistory') || '[]');
+        const newRoom = { roomId, userId, timestamp: new Date().toISOString() };
+        const updatedHistory = [newRoom, ...roomHistory.filter(room => room.roomId !== roomId)].slice(0, 10);
+        localStorage.setItem('pokerRoomHistory', JSON.stringify(updatedHistory));
         fetchRoom();
       } else {
         setError('Failed to join room');

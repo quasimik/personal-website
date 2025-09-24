@@ -11,6 +11,7 @@ import { v7 as uuidv7 } from 'uuid';
 export default function ScrumPoker() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
+  const [roomHistory, setRoomHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -21,6 +22,26 @@ export default function ScrumPoker() {
       setUserName(storedUserName);
     }
   }, []);
+
+  // Load room history from localStorage
+  useEffect(() => {
+    const storedHistory = localStorage.getItem('pokerRoomHistory');
+    if (storedHistory) {
+      try {
+        setRoomHistory(JSON.parse(storedHistory));
+      } catch (error) {
+        console.error('Failed to parse room history:', error);
+      }
+    }
+  }, []);
+
+  // Save room to history
+  const saveRoomToHistory = (roomId, userId) => {
+    const newRoom = { roomId, userId, timestamp: new Date().toISOString() };
+    const updatedHistory = [newRoom, ...roomHistory.filter(room => room.roomId !== roomId)].slice(0, 10); // Keep only 10 most recent
+    setRoomHistory(updatedHistory);
+    localStorage.setItem('pokerRoomHistory', JSON.stringify(updatedHistory));
+  };
 
   const createRoom = async () => {
     if (!userName.trim()) {
@@ -47,6 +68,7 @@ export default function ScrumPoker() {
         const room = await response.json();
         localStorage.setItem('pokerUserId', userId);
         localStorage.setItem('pokerUserName', userName.trim());
+        saveRoomToHistory(room.id, userId);
         router.push(`/poker/${room.id}`);
       } else {
         console.error('Failed to create room:', response);
@@ -99,6 +121,28 @@ export default function ScrumPoker() {
             </button>
             {error && <p className={pokerStyles.error}>{error}</p>}
           </div>
+
+          {roomHistory.length > 0 && (
+            <div className={pokerStyles.roomHistory}>
+              <h3>Room History</h3>
+              <div className={pokerStyles.roomList}>
+                {roomHistory.map((room, index) => (
+                  <div key={`${room.roomId}-${index}`} className={pokerStyles.roomItem}>
+                    <div className={pokerStyles.roomInfo}>
+                      <h4>Room {room.roomId}</h4>
+                      <p>Joined as {userName}</p>
+                      <p className={pokerStyles.roomTimestamp}>
+                        {new Date(room.timestamp).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <Link href={`/poker/${room.roomId}`}>
+                      <button className={pokerStyles.joinButton}>Rejoin</button>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -173,6 +217,25 @@ export default function ScrumPoker() {
           box-shadow: none;
         }
 
+
+        .room-history {
+          text-align: center;
+          margin-top: 40px;
+          padding-top: 30px;
+          border-top: 2px solid #e9ecef;
+        }
+
+        .room-history h3 {
+          color: #333;
+          font-size: 22px;
+          margin-bottom: 20px;
+        }
+
+        .room-timestamp {
+          font-size: 12px;
+          color: #888;
+          font-style: italic;
+        }
 
         .error {
           color: #d32f2f;
