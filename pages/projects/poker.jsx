@@ -11,15 +11,32 @@ import { v7 as uuidv7 } from 'uuid';
 export default function ScrumPoker() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState('');
   const [roomHistory, setRoomHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Load user name from localStorage
+  // Load permanent user ID and prepopulate name from room history
   useEffect(() => {
-    const storedUserName = localStorage.getItem('pokerUserName');
-    if (storedUserName) {
-      setUserName(storedUserName);
+    // Get or generate permanent user ID
+    let storedUserId = localStorage.getItem('pokerUserId');
+    if (!storedUserId) {
+      storedUserId = uuidv7();
+      localStorage.setItem('pokerUserId', storedUserId);
+    }
+    setUserId(storedUserId);
+
+    // Prepopulate name from most recent room in history
+    const storedHistory = localStorage.getItem('pokerRoomHistory');
+    if (storedHistory) {
+      try {
+        const history = JSON.parse(storedHistory);
+        if (history.length > 0 && history[0].userName) {
+          setUserName(history[0].userName);
+        }
+      } catch (error) {
+        console.error('Failed to parse room history:', error);
+      }
     }
   }, []);
 
@@ -53,7 +70,6 @@ export default function ScrumPoker() {
     setError('');
 
     try {
-      const userId = uuidv7();
       const response = await fetch('/api/rooms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -66,8 +82,6 @@ export default function ScrumPoker() {
 
       if (response.ok) {
         const room = await response.json();
-        localStorage.setItem('pokerUserId', userId);
-        localStorage.setItem('pokerUserName', userName.trim());
         saveRoomToHistory(room.id, userId, userName.trim());
         router.push(`/poker/${room.id}`);
       } else {

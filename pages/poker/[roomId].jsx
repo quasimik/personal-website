@@ -20,18 +20,27 @@ export default function PokerRoom() {
   const [error, setError] = useState('');
   const [newTicketDescription, setNewTicketDescription] = useState('');
 
-  // Generate or retrieve user ID
+  // Load permanent user ID and prepopulate name from room history
   useEffect(() => {
-    const storedUserId = localStorage.getItem('pokerUserId');
-    const storedUserName = localStorage.getItem('pokerUserName');
+    // Get permanent user ID
+    let storedUserId = localStorage.getItem('pokerUserId');
+    if (!storedUserId) {
+      storedUserId = uuidv7();
+      localStorage.setItem('pokerUserId', storedUserId);
+    }
+    setUserId(storedUserId);
 
-    if (storedUserId && storedUserName) {
-      setUserId(storedUserId);
-      setUserName(storedUserName);
-    } else {
-      const newUserId = uuidv7();
-      setUserId(newUserId);
-      localStorage.setItem('pokerUserId', newUserId);
+    // Prepopulate name from most recent room in history
+    const storedHistory = localStorage.getItem('pokerRoomHistory');
+    if (storedHistory) {
+      try {
+        const history = JSON.parse(storedHistory);
+        if (history.length > 0 && history[0].userName) {
+          setUserName(history[0].userName);
+        }
+      } catch (error) {
+        console.error('Failed to parse room history:', error);
+      }
     }
   }, []);
 
@@ -85,7 +94,6 @@ export default function PokerRoom() {
 
       if (response.ok) {
         setIsJoined(true);
-        localStorage.setItem('pokerUserName', userName.trim());
         // Save to room history
         const roomHistory = JSON.parse(localStorage.getItem('pokerRoomHistory') || '[]');
         const newRoom = { roomId, userId, userName: userName.trim(), timestamp: new Date().toISOString() };
