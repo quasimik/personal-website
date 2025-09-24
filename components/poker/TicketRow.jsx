@@ -13,7 +13,6 @@ const TicketRow = ({
   allParticipantsVoted,
   loading,
   selectedVote,
-  hasVoted,
   handleVote,
   isModerator,
   handleReveal,
@@ -30,17 +29,13 @@ const TicketRow = ({
 
       {isCurrent ? (
         <div className={styles.currentTicketContent}>
-          {!votesRevealed ? (
-            <VotingSection
-              cardList={cardList}
-              selectedVote={selectedVote}
-              handleVote={handleVote}
-              loading={loading}
-              hasVoted={hasVoted}
-            />
-          ) : (
-            <ResultsSection ticket={ticket} cardList={cardList} participants={participants} userId={userId} />
-          )}
+          <ResultsSection ticket={ticket} participants={participants} userId={userId} votesRevealed={votesRevealed} />
+          <VotingSection
+            cardList={cardList}
+            selectedVote={selectedVote}
+            handleVote={handleVote}
+            loading={loading}
+          />
 
           {isModerator && (
             <ModeratorControls
@@ -71,11 +66,13 @@ const TicketRow = ({
                     const participant = Object.values(participants).find(p => p.id === participantId);
                     const participantName = participant ? participant.name : participantId;
                     return (
-                      <div key={participantId} className={styles.pastVoteResult}>
-                        <div className={styles.pastVoteParticipant}>
+                      <div key={participantId} className={styles.pastVoteResultContainer}>
+                        <div className={styles.pastVoteResult}>
+                          <div className={styles.pastVoteValue}>{vote}</div>
+                        </div>
+                        <div className={styles.pastVoteParticipantName}>
                           {participantName}{participantId === userId ? ' (You)' : ''}
                         </div>
-                        <div className={styles.pastVoteValue}>{vote}</div>
                       </div>
                     );
                   })}

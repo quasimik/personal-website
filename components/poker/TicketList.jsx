@@ -11,7 +11,6 @@ const TicketList = ({
   allParticipantsVoted,
   loading,
   selectedVote,
-  hasVoted,
   handleVote,
   isModerator,
   newTicketDescription,
@@ -50,7 +49,6 @@ const TicketList = ({
           allParticipantsVoted={allParticipantsVoted}
           loading={loading}
           selectedVote={selectedVote}
-          hasVoted={hasVoted}
           handleVote={handleVote}
           isModerator={isModerator}
           handleReveal={handleReveal}

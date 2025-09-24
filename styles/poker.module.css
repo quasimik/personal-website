@@ -80,16 +80,27 @@
   justify-content: center;
 }
 
-.pastVoteResult {
-  padding: 6px 8px;
-  background: #e9ecef;
-  border-radius: 6px;
-  text-align: center;
-  min-width: 70px;
-  min-height: 50px;
+.pastVoteResultContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  min-width: 100px;
+}
+
+.pastVoteResultContainer {
+  min-width: 80px;
+}
+
+.pastVoteResult {
+  width: 50px;
+  height: 40px;
+  padding: 6px;
+}
+
+.pastVoteParticipantName {
+  font-size: 9px;
+  max-width: 80px;
 }
 
 .pastVoteValue {
@@ -114,6 +125,16 @@
   color: #6c757d;
   margin-bottom: 3px;
   font-weight: 500;
+}
+
+.pastVoteParticipantName {
+  font-size: 10px;
+  color: #6c757d;
+  text-align: center;
+  font-weight: 500;
+  max-width: 100px;
+  word-wrap: break-word;
+  line-height: 1.1;
 }
 
 .pastVoteCount {
@@ -419,6 +440,13 @@
   border-radius: 4px;
 }
 
+.voteChangeNote {
+  color: #28a745;
+  font-style: italic;
+  margin-left: 4px;
+  font-weight: normal;
+}
+
 .resultsSection {
   text-align: center;
 }
@@ -435,18 +463,28 @@
   margin: 20px 0;
 }
 
-.voteResult {
-  padding: 10px;
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 6px;
-  min-width: 80px;
-  min-height: 60px;
-  text-align: center;
+.voteResultContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
 }
+
+  .voteResultContainer {
+    min-width: 90px;
+  }
+
+  .voteResult {
+    width: 60px;
+    height: 45px;
+    padding: 8px;
+  }
+
+  .voteParticipantName {
+    font-size: 10px;
+    max-width: 90px;
+  }
 
 .voteParticipant {
   display: block;
@@ -456,12 +494,27 @@
   font-weight: 500;
 }
 
+.voteParticipantName {
+  font-size: 11px;
+  color: #6c757d;
+  text-align: center;
+  font-weight: 500;
+  max-width: 120px;
+  word-wrap: break-word;
+  line-height: 1.2;
+}
+
 .voteValue {
   display: block;
   font-size: 18px;
   font-weight: bold;
   color: #333;
   margin-bottom: 4px;
+}
+
+.blankCardValue {
+  font-size: 28px;
+  color: #666;
 }
 
 .moderatorControls {

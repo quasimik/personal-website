@@ -276,7 +276,6 @@ export default function PokerRoom() {
               allParticipantsVoted={allParticipantsVoted}
               loading={loading}
               selectedVote={selectedVote}
-              hasVoted={hasVoted}
               handleVote={handleVote}
               isModerator={isModerator}
               newTicketDescription={newTicketDescription}

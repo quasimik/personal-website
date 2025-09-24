@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/poker.module.css';
 
-const VotingSection = ({ cardList, selectedVote, handleVote, loading, hasVoted }) => {
+const VotingSection = ({ cardList, selectedVote, handleVote, loading }) => {
   return (
     <div className={styles.votingSection}>
       <h3>Cast Your Vote</h3>
@@ -17,9 +17,6 @@ const VotingSection = ({ cardList, selectedVote, handleVote, loading, hasVoted }
           </button>
         ))}
       </div>
-      {hasVoted && (
-        <p className={styles.voteStatus}>You voted: {selectedVote}</p>
-      )}
     </div>
   );
 };
