@@ -265,12 +265,6 @@ export default function PokerRoom() {
           />
         ) : (
           <div className={styles.roomContent}>
-            <ParticipantsList
-              participants={room.participants}
-              userId={userId}
-              votesRevealed={votesRevealed}
-            />
-
             <TicketList
               tickets={room.tickets}
               currentTicket={room.currentTicket}
@@ -287,6 +281,12 @@ export default function PokerRoom() {
               handleNextTicket={handleNextTicket}
               handleReveal={handleReveal}
               handleReset={handleReset}
+            />
+
+            <ParticipantsList
+              participants={room.participants}
+              userId={userId}
+              votesRevealed={votesRevealed}
             />
           </div>
         )}
