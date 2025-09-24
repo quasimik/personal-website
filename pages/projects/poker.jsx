@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Layout from '../../components/layout';
 import utilStyles from '/styles/utils.module.css';
 import pokerStyles from '/styles/poker.module.css';
-import { v4 as uuidv4 } from 'uuid';
+import { v7 as uuidv7 } from 'uuid';
 
 export default function ScrumPoker() {
   const router = useRouter();
@@ -50,7 +50,7 @@ export default function ScrumPoker() {
     setError('');
 
     try {
-      const userId = uuidv4();
+      const userId = uuidv7();
       const response = await fetch('/api/rooms', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -67,9 +67,11 @@ export default function ScrumPoker() {
         localStorage.setItem('pokerUserName', userName.trim());
         router.push(`/poker/${room.id}`);
       } else {
+        console.error('Failed to create room:', response);
         setError('Failed to create room');
       }
     } catch (error) {
+      console.error('Failed to create room:', error);
       setError('Failed to create room');
     } finally {
       setLoading(false);

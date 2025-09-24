@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { v4 as uuidv4 } from 'uuid';
+import { v7 as uuidv7 } from 'uuid';
 
 // Initialize Redis
 const redis = Redis.fromEnv();
@@ -147,7 +147,7 @@ export async function createRoomId() {
   let roomId;
   let attempts = 0;
   do {
-    roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+    roomId = uuidv7();
     attempts++;
     if (attempts > 10) {
       throw new Error('Failed to generate unique room ID');

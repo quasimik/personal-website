@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Layout from '../../components/layout';
-import { v4 as uuidv4 } from 'uuid';
+import { v7 as uuidv7 } from 'uuid';
 import styles from '../../styles/poker.module.css';
 
 const FIBONACCI_SERIES = ['0', '1', '2', '3', '5', '8', '13', '21', '?', '☕'];
@@ -29,7 +29,7 @@ export default function PokerRoom() {
       setUserId(storedUserId);
       setUserName(storedUserName);
     } else {
-      const newUserId = uuidv4();
+      const newUserId = uuidv7();
       setUserId(newUserId);
       localStorage.setItem('pokerUserId', newUserId);
     }
