@@ -75,7 +75,7 @@ export default function PokerRoom() {
   useEffect(() => {
     if (roomId) {
       fetchRoom();
-      const interval = setInterval(fetchRoom, 2000); // Poll every 2 seconds
+      const interval = setInterval(fetchRoom, 5000); // Poll every 5 seconds
       return () => clearInterval(interval);
     }
   }, [roomId, fetchRoom]);
