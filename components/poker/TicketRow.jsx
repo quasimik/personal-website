@@ -18,7 +18,8 @@ const TicketRow = ({
   isModerator,
   handleReveal,
   handleReset,
-  participants
+  participants,
+  userId
 }) => {
   return (
     <div className={`${styles.ticketRow} ${isCurrent ? styles.currentTicket : styles.pastTicket}`}>
@@ -38,7 +39,7 @@ const TicketRow = ({
               hasVoted={hasVoted}
             />
           ) : (
-            <ResultsSection ticket={ticket} cardList={cardList} participants={participants} />
+            <ResultsSection ticket={ticket} cardList={cardList} participants={participants} userId={userId} />
           )}
 
           {isModerator && (
@@ -72,7 +73,7 @@ const TicketRow = ({
                     return (
                       <div key={participantId} className={styles.pastVoteResult}>
                         <div className={styles.pastVoteParticipant}>
-                          {participantName}{participantId === Object.keys(participants)[0] ? ' (You)' : ''}
+                          {participantName}{participantId === userId ? ' (You)' : ''}
                         </div>
                         <div className={styles.pastVoteValue}>{vote}</div>
                       </div>

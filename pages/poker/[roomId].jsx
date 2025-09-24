@@ -285,6 +285,7 @@ export default function PokerRoom() {
               handleReveal={handleReveal}
               handleReset={handleReset}
               participants={room.participants}
+              userId={userId}
             />
 
             <ParticipantsList

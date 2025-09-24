@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/poker.module.css';
 
-const ResultsSection = ({ ticket, cardList, participants }) => {
+const ResultsSection = ({ ticket, cardList, participants, userId }) => {
   return (
     <div className={styles.resultsSection}>
       <h3>Results</h3>
@@ -22,7 +22,7 @@ const ResultsSection = ({ ticket, cardList, participants }) => {
             return (
               <div key={participantId} className={styles.voteResult}>
                 <div className={styles.voteParticipant}>
-                  {participantName}{participantId === Object.keys(participants)[0] ? ' (You)' : ''}
+                  {participantName}{participantId === userId ? ' (You)' : ''}
                 </div>
                 <div className={styles.voteValue}>{vote}</div>
               </div>

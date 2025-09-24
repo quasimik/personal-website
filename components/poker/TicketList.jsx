@@ -19,7 +19,8 @@ const TicketList = ({
   handleNextTicket,
   handleReveal,
   handleReset,
-  participants
+  participants,
+  userId
 }) => {
   if (!tickets || tickets.length === 0) {
     return (
@@ -55,6 +56,7 @@ const TicketList = ({
           handleReveal={handleReveal}
           handleReset={handleReset}
           participants={participants}
+          userId={userId}
         />
       ))}
 
