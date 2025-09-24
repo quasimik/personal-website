@@ -8,10 +8,28 @@ import utilStyles from '/styles/utils.module.css';
 import pokerStyles from '/styles/poker.module.css';
 import { v7 as uuidv7 } from 'uuid';
 
+// Room name generator
+const adjectives = [
+  'Swift', 'Clever', 'Bright', 'Quick', 'Smart', 'Wise', 'Bold', 'Cool', 'Epic', 'Fast',
+  'Fresh', 'Fun', 'Great', 'Hot', 'Nice', 'Rad', 'Super', 'Wild', 'Zany', 'Zippy'
+];
+
+const nouns = [
+  'Eagle', 'Tiger', 'Lion', 'Bear', 'Wolf', 'Fox', 'Hawk', 'Owl', 'Raven', 'Shark',
+  'Whale', 'Dolphin', 'Otter', 'Seal', 'Moose', 'Deer', 'Horse', 'Zebra', 'Giraffe', 'Rhino'
+];
+
+const generateRoomName = () => {
+  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  return `${adj} ${noun}`;
+};
+
 export default function ScrumPoker() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
+  const [roomName, setRoomName] = useState('');
   const [roomHistory, setRoomHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -25,6 +43,9 @@ export default function ScrumPoker() {
       localStorage.setItem('pokerUserId', storedUserId);
     }
     setUserId(storedUserId);
+
+    // Generate default room name
+    setRoomName(generateRoomName());
 
     // Prepopulate name from most recent room in history
     const storedHistory = localStorage.getItem('pokerRoomHistory');
@@ -76,6 +97,7 @@ export default function ScrumPoker() {
         body: JSON.stringify({
           userId,
           userName: userName.trim(),
+          roomName: roomName.trim() || generateRoomName(),
           ticketDescription: 'Sample ticket - click "Next Ticket" to add your first real ticket'
         })
       });
@@ -121,6 +143,13 @@ export default function ScrumPoker() {
             <h3>Create New Room</h3>
             <input
               type="text"
+              placeholder="Room name"
+              value={roomName}
+              onChange={(e) => setRoomName(e.target.value)}
+              className={pokerStyles.roomNameInput}
+            />
+            <input
+              type="text"
               placeholder="Your name"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
@@ -143,7 +172,7 @@ export default function ScrumPoker() {
                 {roomHistory.map((room, index) => (
                   <div key={`${room.roomId}-${index}`} className={pokerStyles.roomItem}>
                     <div className={pokerStyles.roomInfo}>
-                      <h4>Room {room.roomId}</h4>
+                      <h4>{room.roomName || `Room ${room.roomId}`}</h4>
                       <p>Joined as {room.userName}</p>
                       <p className={pokerStyles.roomTimestamp}>
                         {new Date(room.timestamp).toLocaleDateString()}

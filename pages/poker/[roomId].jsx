@@ -96,7 +96,13 @@ export default function PokerRoom() {
         setIsJoined(true);
         // Save to room history
         const roomHistory = JSON.parse(localStorage.getItem('pokerRoomHistory') || '[]');
-        const newRoom = { roomId, userId, userName: userName.trim(), timestamp: new Date().toISOString() };
+        const newRoom = {
+          roomId,
+          roomName: room?.name || `Room ${roomId}`,
+          userId,
+          userName: userName.trim(),
+          timestamp: new Date().toISOString()
+        };
         const updatedHistory = [newRoom, ...roomHistory.filter(room => room.roomId !== roomId)].slice(0, 10);
         localStorage.setItem('pokerRoomHistory', JSON.stringify(updatedHistory));
         fetchRoom();
@@ -244,7 +250,7 @@ export default function PokerRoom() {
       </Head>
 
       <div className={styles.pokerRoom}>
-        <h1>Scrum Poker - Room {roomId}</h1>
+        <h1>Scrum Poker - {room?.name || `Room ${roomId}`}</h1>
 
         {!isJoined ? (
           <div className={styles.joinForm}>
