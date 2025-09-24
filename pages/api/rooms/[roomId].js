@@ -97,6 +97,8 @@ export default async function handler(req, res) {
                 nextTicketIndex++;
               }
               room.currentTicket = nextTicketIndex;
+              // Hide votes for the new current ticket
+              room.revealed = false;
             }
             break;
 
