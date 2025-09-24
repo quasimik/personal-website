@@ -11,7 +11,6 @@ import { v7 as uuidv7 } from 'uuid';
 export default function ScrumPoker() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
-  const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -22,23 +21,6 @@ export default function ScrumPoker() {
       setUserName(storedUserName);
     }
   }, []);
-
-  // Fetch existing rooms
-  useEffect(() => {
-    fetchRooms();
-  }, []);
-
-  const fetchRooms = async () => {
-    try {
-      const response = await fetch('/api/rooms');
-      if (response.ok) {
-        const roomsData = await response.json();
-        setRooms(roomsData);
-      }
-    } catch (error) {
-      console.error('Failed to fetch rooms:', error);
-    }
-  };
 
   const createRoom = async () => {
     if (!userName.trim()) {
@@ -117,30 +99,6 @@ export default function ScrumPoker() {
             </button>
             {error && <p className={pokerStyles.error}>{error}</p>}
           </div>
-
-          <div className={pokerStyles.existingRooms}>
-            <h3>Existing Rooms</h3>
-            {rooms.length === 0 ? (
-              <p>No active rooms</p>
-            ) : (
-              <div className={pokerStyles.roomList}>
-                {rooms.map(room => (
-                  <div key={room.id} className={pokerStyles.roomItem}>
-                    <div className={pokerStyles.roomInfo}>
-                      <h4>Room {room.id}</h4>
-                      <p>{room.participantCount} participants</p>
-                      {room.currentTicket && (
-                        <p className={pokerStyles.currentTicket}>{room.currentTicket}</p>
-                      )}
-                    </div>
-                    <Link href={`/poker/${room.id}`}>
-                      <button className={pokerStyles.joinButton}>Join</button>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
       </section>
 
@@ -215,72 +173,6 @@ export default function ScrumPoker() {
           box-shadow: none;
         }
 
-        .existing-rooms {
-          text-align: center;
-        }
-
-        .existing-rooms h3 {
-          color: #333;
-          font-size: 22px;
-          margin-bottom: 20px;
-        }
-
-        .room-list {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 20px;
-          margin-top: 20px;
-        }
-
-        .room-item {
-          background: white;
-          padding: 24px;
-          border-radius: 12px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .room-item:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
-
-        .room-info h4 {
-          margin: 0 0 8px 0;
-          color: #1976d2;
-          font-size: 18px;
-        }
-
-        .room-info p {
-          margin: 4px 0;
-          font-size: 14px;
-          color: #666;
-        }
-
-        .current-ticket {
-          font-style: italic;
-          color: #888;
-          font-size: 13px;
-        }
-
-        .join-button {
-          padding: 12px 24px;
-          background: linear-gradient(135deg, #2e7d32, #4caf50);
-          color: white;
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-          font-weight: 600;
-          transition: all 0.2s ease;
-        }
-
-        .join-button:hover {
-          background: linear-gradient(135deg, #1b5e20, #2e7d32);
-          transform: translateY(-1px);
-        }
 
         .error {
           color: #d32f2f;
@@ -299,19 +191,6 @@ export default function ScrumPoker() {
             width: 100%;
           }
 
-          .room-list {
-            grid-template-columns: 1fr;
-          }
-
-          .room-item {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 15px;
-          }
-
-          .join-button {
-            width: 100%;
-          }
         }
       `}</style>
     </Layout>
