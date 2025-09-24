@@ -23,10 +23,19 @@ export default async function handler(req, res) {
 
     case 'POST':
       try {
-        const { userId, userName, roomName, estimationPreset, ticketDescription } = req.body;
+        const { userId, userName, roomName, cardList, ticketDescription } = req.body;
 
         if (!userId || !userName) {
           return res.status(400).json({ error: 'User ID and name are required' });
+        }
+
+        // Validate card list
+        if (!cardList || !Array.isArray(cardList) || cardList.length === 0) {
+          return res.status(400).json({ error: 'Card list is required and must not be empty' });
+        }
+
+        if (cardList.length > 20) {
+          return res.status(400).json({ error: 'Maximum 20 cards allowed' });
         }
 
         const roomId = await createRoomId();
@@ -34,7 +43,7 @@ export default async function handler(req, res) {
         const room = {
           id: roomId,
           name: roomName,
-          estimationPreset: estimationPreset || 'scrum',
+          cardList: cardList,
           createdAt: new Date().toISOString(),
           participants: {
             [userId]: {

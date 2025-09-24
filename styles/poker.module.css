@@ -116,31 +116,95 @@
   cursor: not-allowed;
 }
 
-.presetSelector {
-  margin-bottom: 20px;
-  text-align: left;
+.cardsContainer {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 12px;
+  background: #f8f9fa;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-.presetSelector label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #333;
+.cardsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cardItem {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 14px;
 }
 
-.presetSelect {
+.cardText {
+  font-weight: 500;
+}
+
+.removeCardButton {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeCardButton:hover {
+  color: #c82333;
+}
+
+.addCardSection {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.addCardInput {
+  flex: 1;
   padding: 8px 12px;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background: white;
-  min-width: 150px;
 }
 
-.presetSelect:focus {
+.addCardInput:focus {
   outline: none;
   border-color: #1976d2;
+}
+
+.addCardButton {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addCardButton:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.addCardButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
 }
 
 .voteStatus {

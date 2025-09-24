@@ -49,6 +49,8 @@ export default function ScrumPoker() {
   const [userId, setUserId] = useState('');
   const [roomName, setRoomName] = useState('');
   const [selectedPreset, setSelectedPreset] = useState('scrum');
+  const [cardList, setCardList] = useState([]);
+  const [newCard, setNewCard] = useState('');
   const [roomHistory, setRoomHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -80,6 +82,12 @@ export default function ScrumPoker() {
     }
   }, []);
 
+  // Update card list when preset changes
+  useEffect(() => {
+    const preset = estimationPresets[selectedPreset];
+    setCardList(preset.cards.length > 0 ? [...preset.cards] : []);
+  }, [selectedPreset]);
+
   // Load room history from localStorage
   useEffect(() => {
     const storedHistory = localStorage.getItem('pokerRoomHistory');
@@ -91,6 +99,19 @@ export default function ScrumPoker() {
       }
     }
   }, []);
+
+  // Add card to list
+  const addCard = () => {
+    if (newCard.trim() && !cardList.includes(newCard.trim()) && cardList.length < 20) {
+      setCardList([...cardList, newCard.trim()]);
+      setNewCard('');
+    }
+  };
+
+  // Remove card from list
+  const removeCard = (cardToRemove) => {
+    setCardList(cardList.filter(card => card !== cardToRemove));
+  };
 
   // Save room to history
   const saveRoomToHistory = (roomId, roomName, userId, userName) => {
@@ -117,7 +138,7 @@ export default function ScrumPoker() {
           userId,
           userName: userName.trim(),
           roomName: roomName.trim() || generateRoomName(),
-          estimationPreset: selectedPreset,
+          cardList: cardList,
           ticketDescription: 'Sample ticket - click "Next Ticket" to add your first real ticket'
         })
       });
@@ -167,6 +188,45 @@ export default function ScrumPoker() {
                   <option key={key} value={key}>{preset.name}</option>
                 ))}
               </select>
+            </div>
+            <div className={pokerStyles.inputGroup}>
+              <label>Card List ({cardList.length}/20 max)</label>
+              <div className={pokerStyles.cardsContainer}>
+                <div className={pokerStyles.cardsList}>
+                  {cardList.map((card, index) => (
+                    <div key={index} className={pokerStyles.cardItem}>
+                      <span className={pokerStyles.cardText}>{card}</span>
+                      <button
+                        type="button"
+                        onClick={() => removeCard(card)}
+                        className={pokerStyles.removeCardButton}
+                        title="Remove card"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className={pokerStyles.addCardSection}>
+                  <input
+                    type="text"
+                    placeholder="Add card..."
+                    value={newCard}
+                    onChange={(e) => setNewCard(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && addCard()}
+                    className={pokerStyles.addCardInput}
+                    disabled={cardList.length >= 20}
+                  />
+                  <button
+                    type="button"
+                    onClick={addCard}
+                    disabled={!newCard.trim() || cardList.includes(newCard.trim()) || cardList.length >= 20}
+                    className={pokerStyles.addCardButton}
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
             </div>
             <div className={pokerStyles.inputGroup}>
               <label htmlFor="playerName">Your name (can be unique per room)</label>
