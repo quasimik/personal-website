@@ -88,7 +88,7 @@ export default function PokerRoom() {
         localStorage.setItem('pokerUserName', userName.trim());
         // Save to room history
         const roomHistory = JSON.parse(localStorage.getItem('pokerRoomHistory') || '[]');
-        const newRoom = { roomId, userId, timestamp: new Date().toISOString() };
+        const newRoom = { roomId, userId, userName: userName.trim(), timestamp: new Date().toISOString() };
         const updatedHistory = [newRoom, ...roomHistory.filter(room => room.roomId !== roomId)].slice(0, 10);
         localStorage.setItem('pokerRoomHistory', JSON.stringify(updatedHistory));
         fetchRoom();

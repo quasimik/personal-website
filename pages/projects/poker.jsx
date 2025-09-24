@@ -36,8 +36,8 @@ export default function ScrumPoker() {
   }, []);
 
   // Save room to history
-  const saveRoomToHistory = (roomId, userId) => {
-    const newRoom = { roomId, userId, timestamp: new Date().toISOString() };
+  const saveRoomToHistory = (roomId, userId, userName) => {
+    const newRoom = { roomId, userId, userName, timestamp: new Date().toISOString() };
     const updatedHistory = [newRoom, ...roomHistory.filter(room => room.roomId !== roomId)].slice(0, 10); // Keep only 10 most recent
     setRoomHistory(updatedHistory);
     localStorage.setItem('pokerRoomHistory', JSON.stringify(updatedHistory));
@@ -68,7 +68,7 @@ export default function ScrumPoker() {
         const room = await response.json();
         localStorage.setItem('pokerUserId', userId);
         localStorage.setItem('pokerUserName', userName.trim());
-        saveRoomToHistory(room.id, userId);
+        saveRoomToHistory(room.id, userId, userName.trim());
         router.push(`/poker/${room.id}`);
       } else {
         console.error('Failed to create room:', response);
@@ -130,7 +130,7 @@ export default function ScrumPoker() {
                   <div key={`${room.roomId}-${index}`} className={pokerStyles.roomItem}>
                     <div className={pokerStyles.roomInfo}>
                       <h4>Room {room.roomId}</h4>
-                      <p>Joined as {userName}</p>
+                      <p>Joined as {room.userName}</p>
                       <p className={pokerStyles.roomTimestamp}>
                         {new Date(room.timestamp).toLocaleDateString()}
                       </p>
