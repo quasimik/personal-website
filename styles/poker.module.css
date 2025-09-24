@@ -597,6 +597,43 @@
   cursor: not-allowed;
 }
 
+.estimateSelector {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+}
+
+.estimateSelector label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+  .estimateSelect {
+    width: 100%;
+    padding: 6px 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: white;
+  }
+
+  .estimateSelect:focus {
+    outline: none;
+    border-color: #28a745;
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+  }
+
+  .estimateSelector {
+    min-width: 180px;
+    padding: 10px;
+  }
+
 
 
 

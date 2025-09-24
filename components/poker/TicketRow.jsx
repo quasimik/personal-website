@@ -19,7 +19,9 @@ const TicketRow = ({
   handleReset,
   participants,
   userId,
-  handleAcceptTicket
+  handleAcceptTicket,
+  selectedEstimate,
+  setSelectedEstimate
 }) => {
   return (
     <div className={`${styles.ticketRow} ${isCurrent ? styles.currentTicket : styles.pastTicket}`}>
@@ -46,6 +48,10 @@ const TicketRow = ({
               handleReveal={handleReveal}
               handleReset={handleReset}
               handleAcceptTicket={handleAcceptTicket}
+              currentTicket={ticket}
+              cardList={cardList}
+              selectedEstimate={selectedEstimate}
+              setSelectedEstimate={setSelectedEstimate}
             />
           )}
         </div>

@@ -7,7 +7,11 @@ const ModeratorControls = ({
   loading,
   handleReveal,
   handleReset,
-  handleAcceptTicket
+  handleAcceptTicket,
+  currentTicket,
+  cardList,
+  selectedEstimate,
+  setSelectedEstimate
 }) => {
   if (!votesRevealed) {
     return (
@@ -23,14 +27,37 @@ const ModeratorControls = ({
     );
   }
 
+  const hasAcceptedEstimate = currentTicket?.acceptedEstimate;
+
   return (
     <div className={styles.moderatorControls}>
       <button onClick={handleReset} disabled={loading} className={styles.resetButton}>
         Reset Votes
       </button>
-      <button onClick={handleAcceptTicket} disabled={loading} className={styles.acceptButton}>
-        Accept Estimate
-      </button>
+
+      {!hasAcceptedEstimate && (
+        <div className={styles.estimateSelector}>
+          <label htmlFor="estimateSelect">Accept Estimate:</label>
+          <select
+            id="estimateSelect"
+            value={selectedEstimate}
+            onChange={(e) => setSelectedEstimate(e.target.value)}
+            className={styles.estimateSelect}
+          >
+            <option value="">Choose estimate...</option>
+            {cardList.map(estimate => (
+              <option key={estimate} value={estimate}>{estimate}</option>
+            ))}
+          </select>
+          <button
+            onClick={handleAcceptTicket}
+            disabled={loading || !selectedEstimate}
+            className={styles.acceptButton}
+          >
+            Accept
+          </button>
+        </div>
+      )}
     </div>
   );
 };

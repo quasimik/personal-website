@@ -24,6 +24,7 @@ export default function PokerRoom() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [newTicketDescription, setNewTicketDescription] = useState('');
+  const [selectedEstimate, setSelectedEstimate] = useState('');
 
   // Load permanent user ID and prepopulate name from room history
   useEffect(() => {
@@ -201,6 +202,11 @@ export default function PokerRoom() {
 
   // Accept current ticket with estimate
   const handleAcceptTicket = async () => {
+    if (!selectedEstimate) {
+      setError('Please select an estimate to accept');
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await fetch(`/api/rooms/${roomId}`, {
@@ -209,12 +215,12 @@ export default function PokerRoom() {
         body: JSON.stringify({
           action: 'accept_ticket',
           userId,
-          acceptedEstimate: selectedVote
+          acceptedEstimate: selectedEstimate
         })
       });
 
       if (response.ok) {
-        setSelectedVote(null);
+        setSelectedEstimate('');
         fetchRoom();
       }
     } catch (error) {
@@ -310,6 +316,8 @@ export default function PokerRoom() {
               participants={room.participants}
               userId={userId}
               handleAcceptTicket={handleAcceptTicket}
+              selectedEstimate={selectedEstimate}
+              setSelectedEstimate={setSelectedEstimate}
             />
 
             <ParticipantsList

@@ -20,7 +20,9 @@ const TicketList = ({
   handleReset,
   participants,
   userId,
-  handleAcceptTicket
+  handleAcceptTicket,
+  selectedEstimate,
+  setSelectedEstimate
 }) => {
   return (
     <div className={styles.ticketsArea}>
@@ -42,6 +44,8 @@ const TicketList = ({
           participants={participants}
           userId={userId}
           handleAcceptTicket={handleAcceptTicket}
+          selectedEstimate={selectedEstimate}
+          setSelectedEstimate={setSelectedEstimate}
         />
       ))}
 
