@@ -244,14 +244,8 @@ export default function PokerRoom() {
   const votesRevealed = room?.revealed;
 
   return (
-    <Layout>
-      <Head>
-        <title>Scrum Poker - Room {roomId}</title>
-      </Head>
-
+    <Layout title={`Scrum Poker - ${room?.name || `Room ${roomId}`}`}>
       <div className={styles.pokerRoom}>
-        <h1>Scrum Poker - {room?.name || `Room ${roomId}`}</h1>
-
         {!isJoined ? (
           <div className={styles.joinForm}>
             <h2>Join Room</h2>
@@ -273,7 +267,7 @@ export default function PokerRoom() {
               <div className={styles.participantList}>
                 {Object.values(room.participants).map(participant => (
                   <div key={participant.id} className={styles.participant}>
-                    <span className={styles.participantName}>{participant.name}</span>
+                    <span className={styles.participantName}>{participant.name}{ participant.id === userId ? ' (You)' : ''}</span>
                     {votesRevealed ? (
                       <span className={styles.participantVote}>{participant.vote || 'No vote'}</span>
                     ) : (

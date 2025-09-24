@@ -74,8 +74,8 @@ export default function ScrumPoker() {
   }, []);
 
   // Save room to history
-  const saveRoomToHistory = (roomId, userId, userName) => {
-    const newRoom = { roomId, userId, userName, timestamp: new Date().toISOString() };
+  const saveRoomToHistory = (roomId, roomName, userId, userName) => {
+    const newRoom = { roomId, roomName, userId, userName, timestamp: new Date().toISOString() };
     const updatedHistory = [newRoom, ...roomHistory.filter(room => room.roomId !== roomId)].slice(0, 10); // Keep only 10 most recent
     setRoomHistory(updatedHistory);
     localStorage.setItem('pokerRoomHistory', JSON.stringify(updatedHistory));
@@ -104,7 +104,7 @@ export default function ScrumPoker() {
 
       if (response.ok) {
         const room = await response.json();
-        saveRoomToHistory(room.id, userId, userName.trim());
+        saveRoomToHistory(room.id, room.name, userId, userName.trim());
         router.push(`/poker/${room.id}`);
       } else {
         console.error('Failed to create room:', response);
@@ -170,31 +170,20 @@ export default function ScrumPoker() {
               <h3>Room History</h3>
               <div className={pokerStyles.roomList}>
                 {roomHistory.map((room, index) => (
-                  <div key={`${room.roomId}-${index}`} className={pokerStyles.roomItem}>
+                  <Link key={`${room.roomId}-${index}`} href={`/poker/${room.roomId}`} className={pokerStyles.roomItem}>
                     <div className={pokerStyles.roomInfo}>
-                      <h4>{room.roomName || `Room ${room.roomId}`}</h4>
-                      <p>Joined as {room.userName}</p>
-                      <p className={pokerStyles.roomTimestamp}>
-                        {new Date(room.timestamp).toLocaleDateString()}
-                      </p>
+                      <span className={pokerStyles.roomName}>{room.roomName || `Room ${room.roomId}`}</span>
+                      <span className={pokerStyles.roomMeta}>
+                        Joined as {room.userName} • {new Date(room.timestamp).toLocaleDateString()}
+                      </span>
                     </div>
-                    <Link href={`/poker/${room.roomId}`}>
-                      <button className={pokerStyles.joinButton}>Rejoin</button>
-                    </Link>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
           )}
         </div>
       </section>
-
-      <section className={utilStyles.headingMd}>
-        <p>
-          <Link href="/">← Back to Home</Link>
-        </p>
-      </section>
-
     </Layout>
   );
 }
