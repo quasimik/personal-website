@@ -33,7 +33,7 @@ const estimationPresets = {
   },
   'tshirt': {
     name: 'T-Shirt Sizes',
-    cards: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '?']
+    cards: ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '?']
   },
   'custom': {
     name: 'Custom',
@@ -185,7 +185,9 @@ export default function ScrumPoker() {
                 className={pokerStyles.presetSelect}
               >
                 {Object.entries(estimationPresets).map(([key, preset]) => (
-                  <option key={key} value={key}>{preset.name}</option>
+                  <option key={key} value={key}>
+                    {preset.name} ({preset.cards.join(', ')})
+                  </option>
                 ))}
               </select>
             </div>
