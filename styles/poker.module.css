@@ -10,6 +10,203 @@
   gap: 20px;
 }
 
+.ticketsArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ticketRow {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 16px;
+  background: white;
+}
+
+.currentTicket {
+  border-left: 4px solid #1976d2;
+  background: #f8f9fa;
+}
+
+.pastTicket {
+  border-left: 4px solid #6c757d;
+  opacity: 0.9;
+}
+
+.ticketHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ticketNumber {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6c757d;
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 12px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.ticketDescription {
+  flex: 1;
+  font-size: 16px;
+  margin: 0;
+  color: #333;
+  line-height: 1.4;
+}
+
+.currentTicketContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pastTicketContent {
+  margin-top: 8px;
+}
+
+.pastResults {
+  margin-top: 12px;
+}
+
+.pastVotesSummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.pastVoteResult {
+  padding: 8px 12px;
+  background: #e9ecef;
+  border-radius: 6px;
+  text-align: center;
+  min-width: 60px;
+}
+
+.pastVoteValue {
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  color: #495057;
+}
+
+.pastVoteCount {
+  display: block;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.pastStatus {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.newTicketForm {
+  border: 2px dashed #28a745;
+  border-radius: 8px;
+  padding: 16px;
+  background: #f8f9fa;
+  margin-top: 20px;
+}
+
+.newTicketInputGroup {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.newTicketInput {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.newTicketInput:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.newTicketButton {
+  padding: 12px 20px;
+  font-size: 16px;
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.newTicketButton:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.newTicketButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.noTickets {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+}
+
+.noTickets h2 {
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.createFirstTicket {
+  margin-top: 20px;
+}
+
+.createFirstTicket input {
+  padding: 12px;
+  font-size: 16px;
+  margin-right: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 300px;
+}
+
+.createFirstTicket button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.createFirstTicket button:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.createFirstTicket button:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
 .participants {
   background: #f8f9fa;
   padding: 16px;
@@ -51,27 +248,6 @@
   font-size: 16px;
 }
 
-.ticketSection {
-  background: white;
-  padding: 20px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-}
-
-.ticketSection h2 {
-  margin-top: 0;
-  color: #333;
-}
-
-.ticketDescription {
-  font-size: 16px;
-  margin: 15px 0;
-  padding: 12px;
-  background: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  color: #333;
-}
 
 .votingSection h3 {
   margin-top: 0;
@@ -289,86 +465,8 @@
   border-color: #000;
 }
 
-.nextTicket {
-  margin-top: 15px;
-  text-align: center;
-}
 
-.nextTicket input {
-  padding: 10px;
-  font-size: 14px;
-  margin-right: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 250px;
-}
 
-.nextTicket button {
-  padding: 10px 20px;
-  font-size: 14px;
-  background: #333;
-  color: white;
-  border: 1px solid #333;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.nextTicket button:hover:not(:disabled) {
-  background: #555;
-  border-color: #555;
-}
-
-.nextTicket button:disabled {
-  background: #ccc;
-  border-color: #ccc;
-}
-
-.noTicket {
-  text-align: center;
-  padding: 30px 20px;
-  background: #f8f9fa;
-  border: 2px dashed #dee2e6;
-  border-radius: 4px;
-}
-
-.noTicket h2 {
-  color: #666;
-  margin-bottom: 20px;
-  font-size: 18px;
-}
-
-.createTicket {
-  margin-top: 20px;
-}
-
-.createTicket input {
-  padding: 10px;
-  font-size: 14px;
-  margin-right: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 280px;
-}
-
-.createTicket button {
-  padding: 10px 20px;
-  font-size: 14px;
-  background: #333;
-  color: white;
-  border: 1px solid #333;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.createTicket button:hover:not(:disabled) {
-  background: #555;
-  border-color: #555;
-}
-
-.createTicket button:disabled {
-  background: #ccc;
-  border-color: #ccc;
-}
 
 /* Home page styles */
 .scrumPokerSection {
@@ -550,7 +648,21 @@
   }
 
   .votingCards {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 6px;
+  }
+
+  .ticketRow {
+    padding: 12px;
+  }
+
+  .ticketHeader {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .newTicketInputGroup {
+    flex-direction: column;
   }
 
   .nameInput {
@@ -573,23 +685,5 @@
     padding: 12px 16px;
   }
 
-  .nextTicket input {
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 12px;
-  }
 
-  .nextTicket button {
-    width: 100%;
-  }
-
-  .createTicket input {
-    width: 100%;
-    margin-right: 0;
-    margin-bottom: 12px;
-  }
-
-  .createTicket button {
-    width: 100%;
-  }
 }
