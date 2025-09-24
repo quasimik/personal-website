@@ -479,6 +479,106 @@
   font-weight: 500;
 }
 
+/* Room History Styles */
+.roomHistory {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #e9ecef;
+}
+
+.roomHistory h3 {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.roomTimestamp {
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+}
+
+/* Scrum Poker Section Styles */
+.scrumPokerSection {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  padding: 30px;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.createRoom {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.createRoom h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.nameInput {
+  padding: 14px;
+  font-size: 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  margin-right: 12px;
+  width: 220px;
+  transition: border-color 0.2s;
+}
+
+.nameInput:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.roomNameInput {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.roomNameInput:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.createButton {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1976d2, #2196f3);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.createButton:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1565c0, #1976d2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.createButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .roomContent {
@@ -492,6 +592,11 @@
   .nameInput {
     width: 180px;
     margin-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .roomNameInput {
+    width: calc(100% - 24px);
     margin-bottom: 12px;
   }
 
