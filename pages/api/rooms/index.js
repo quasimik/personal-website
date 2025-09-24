@@ -1,0 +1,73 @@
+import { Redis } from '@upstash/redis';
+import { createRoomId } from './[roomId].js';
+
+// Initialize Redis
+const redis = Redis.fromEnv();
+
+export default async function handler(req, res) {
+  const { method } = req;
+
+  switch (method) {
+    case 'GET':
+      try {
+        // Note: Upstash Database doesn't support KEYS command for performance reasons
+        // In a production app, you'd maintain a separate rooms index
+        // For now, return empty array - users must share room IDs directly
+        const rooms = [];
+        res.status(200).json(rooms);
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+        res.status(500).json({ error: 'Failed to fetch rooms' });
+      }
+      break;
+
+    case 'POST':
+      try {
+        const { userId, userName, ticketDescription } = req.body;
+
+        if (!userId || !userName) {
+          return res.status(400).json({ error: 'User ID and name are required' });
+        }
+
+        const roomId = await createRoomId();
+
+        const room = {
+          id: roomId,
+          createdAt: new Date().toISOString(),
+          participants: {
+            [userId]: {
+              id: userId,
+              name: userName,
+              joinedAt: new Date().toISOString(),
+              vote: null
+            }
+          },
+          currentTicket: null,
+          revealed: false,
+          tickets: [],
+          organizerId: userId
+        };
+
+        // Add first ticket if provided
+        if (ticketDescription) {
+          room.tickets.push({
+            description: ticketDescription,
+            votes: {},
+            revealed: false
+          });
+          room.currentTicket = 0;
+        }
+
+        await redis.set(`room:${roomId}`, room);
+        res.status(201).json(room);
+      } catch (error) {
+        console.error('Error creating room:', error);
+        res.status(500).json({ error: 'Failed to create room' });
+      }
+      break;
+
+    default:
+      res.setHeader('Allow', ['GET', 'POST']);
+      res.status(405).end(`Method ${method} Not Allowed`);
+  }
+}
