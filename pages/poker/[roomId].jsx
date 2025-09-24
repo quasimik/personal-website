@@ -4,6 +4,11 @@ import Head from 'next/head';
 import Layout from '../../components/layout';
 import { v7 as uuidv7 } from 'uuid';
 import styles from '../../styles/poker.module.css';
+import {
+  JoinForm,
+  ParticipantsList,
+  TicketList
+} from '../../components/poker';
 
 
 export default function PokerRoom() {
@@ -251,132 +256,38 @@ export default function PokerRoom() {
     <Layout title={`Scrum Poker - ${room?.name || `Room ${roomId}`}`}>
       <div className={styles.pokerRoom}>
         {!isJoined ? (
-          <div className={styles.joinForm}>
-            <h2>Join Room</h2>
-            <input
-              type="text"
-              placeholder="Your name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-            <button onClick={handleJoin} disabled={loading}>
-              {loading ? 'Joining...' : 'Join Room'}
-            </button>
-            {error && <p className={styles.error}>{error}</p>}
-          </div>
+          <JoinForm
+            userName={userName}
+            setUserName={setUserName}
+            handleJoin={handleJoin}
+            loading={loading}
+            error={error}
+          />
         ) : (
           <div className={styles.roomContent}>
-            <div className={styles.participants}>
-              <h3>Participants ({Object.keys(room.participants).length})</h3>
-              <div className={styles.participantList}>
-                {Object.values(room.participants).map(participant => (
-                  <div key={participant.id} className={styles.participant}>
-                    <span className={styles.participantName}>{participant.name}{ participant.id === userId ? ' (You)' : ''}</span>
-                    {votesRevealed ? (
-                      <span className={styles.participantVote}>{participant.vote || 'No vote'}</span>
-                    ) : (
-                      <span className={styles.participantStatus}>
-                        {participant.vote ? '✅' : '⏳'}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ParticipantsList
+              participants={room.participants}
+              userId={userId}
+              votesRevealed={votesRevealed}
+            />
 
-            {currentTicket ? (
-              <div className={styles.ticketSection}>
-                <h2>Current Ticket</h2>
-                <p className={styles.ticketDescription}>{currentTicket.description}</p>
-
-                {!votesRevealed ? (
-                  <div className={styles.votingSection}>
-                    <h3>Cast Your Vote</h3>
-                    <div className={styles.votingCards}>
-                      {cardList.map(vote => (
-                        <button
-                          key={vote}
-                          className={`${styles.voteCard} ${selectedVote === vote ? styles.selected : ''}`}
-                          onClick={() => handleVote(vote)}
-                          disabled={loading}
-                        >
-                          {vote}
-                        </button>
-                      ))}
-                    </div>
-                    {hasVoted && (
-                      <p className={styles.voteStatus}>You voted: {selectedVote}</p>
-                    )}
-                  </div>
-                ) : (
-                  <div className={styles.resultsSection}>
-                    <h3>Results</h3>
-                    <div className={styles.votesSummary}>
-                      {Object.entries(currentTicket.votes || {})
-                        .sort(([a], [b]) => {
-                          const aIndex = cardList.indexOf(a);
-                          const bIndex = cardList.indexOf(b);
-                          return aIndex - bIndex;
-                        })
-                        .map(([vote, count]) => (
-                          <div key={vote} className={styles.voteResult}>
-                            <span className={styles.voteValue}>{vote}</span>
-                            <span className={styles.voteCount}>{count} vote{count !== 1 ? 's' : ''}</span>
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                )}
-
-                {isModerator && (
-                  <div className={styles.moderatorControls}>
-                    {!votesRevealed ? (
-                      <button
-                        onClick={handleReveal}
-                        disabled={!allParticipantsVoted || loading}
-                        className={styles.revealButton}
-                      >
-                        Reveal Votes
-                      </button>
-                    ) : (
-                      <>
-                        <button onClick={handleReset} disabled={loading} className={styles.resetButton}>
-                          Reset Votes
-                        </button>
-                        <div className={styles.nextTicket}>
-                          <input
-                            type="text"
-                            placeholder="Next ticket description"
-                            value={newTicketDescription}
-                            onChange={(e) => setNewTicketDescription(e.target.value)}
-                          />
-                          <button onClick={handleNextTicket} disabled={loading}>
-                            Next Ticket
-                          </button>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className={styles.noTicket}>
-                <h2>No Active Ticket</h2>
-                {isModerator && (
-                  <div className={styles.createTicket}>
-                    <input
-                      type="text"
-                      placeholder="Ticket description"
-                      value={newTicketDescription}
-                      onChange={(e) => setNewTicketDescription(e.target.value)}
-                    />
-                    <button onClick={handleNextTicket} disabled={loading}>
-                      Create First Ticket
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
+            <TicketList
+              tickets={room.tickets}
+              currentTicket={room.currentTicket}
+              cardList={cardList}
+              votesRevealed={votesRevealed}
+              allParticipantsVoted={allParticipantsVoted}
+              loading={loading}
+              selectedVote={selectedVote}
+              hasVoted={hasVoted}
+              handleVote={handleVote}
+              isModerator={isModerator}
+              newTicketDescription={newTicketDescription}
+              setNewTicketDescription={setNewTicketDescription}
+              handleNextTicket={handleNextTicket}
+              handleReveal={handleReveal}
+              handleReset={handleReset}
+            />
           </div>
         )}
       </div>
