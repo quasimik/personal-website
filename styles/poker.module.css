@@ -116,6 +116,33 @@
   cursor: not-allowed;
 }
 
+.presetSelector {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.presetSelector label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.presetSelect {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  min-width: 150px;
+}
+
+.presetSelect:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
 .voteStatus {
   margin-top: 15px;
   font-weight: bold;

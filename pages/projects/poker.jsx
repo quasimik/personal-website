@@ -25,6 +25,22 @@ const generateRoomName = () => {
   return `${word_prefix} ${word_suffix}`;
 };
 
+// Estimation card presets
+const estimationPresets = {
+  'scrum': {
+    name: 'Scrum',
+    cards: ['0', '½', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?', '☕']
+  },
+  'tshirt': {
+    name: 'T-Shirt Sizes',
+    cards: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '?']
+  },
+  'custom': {
+    name: 'Custom',
+    cards: []
+  }
+};
+
 const pageTitle = 'Scrum Poker';
 
 export default function ScrumPoker() {
@@ -32,6 +48,7 @@ export default function ScrumPoker() {
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
   const [roomName, setRoomName] = useState('');
+  const [selectedPreset, setSelectedPreset] = useState('scrum');
   const [roomHistory, setRoomHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -100,6 +117,7 @@ export default function ScrumPoker() {
           userId,
           userName: userName.trim(),
           roomName: roomName.trim() || generateRoomName(),
+          estimationPreset: selectedPreset,
           ticketDescription: 'Sample ticket - click "Next Ticket" to add your first real ticket'
         })
       });
@@ -136,6 +154,19 @@ export default function ScrumPoker() {
                 onChange={(e) => setRoomName(e.target.value)}
                 className={pokerStyles.roomNameInput}
               />
+            </div>
+            <div className={pokerStyles.inputGroup}>
+              <label htmlFor="estimationPreset">Estimation Cards</label>
+              <select
+                id="estimationPreset"
+                value={selectedPreset}
+                onChange={(e) => setSelectedPreset(e.target.value)}
+                className={pokerStyles.presetSelect}
+              >
+                {Object.entries(estimationPresets).map(([key, preset]) => (
+                  <option key={key} value={key}>{preset.name}</option>
+                ))}
+              </select>
             </div>
             <div className={pokerStyles.inputGroup}>
               <label htmlFor="playerName">Your name (can be unique per room)</label>

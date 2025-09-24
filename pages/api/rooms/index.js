@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
     case 'POST':
       try {
-        const { userId, userName, roomName, ticketDescription } = req.body;
+        const { userId, userName, roomName, estimationPreset, ticketDescription } = req.body;
 
         if (!userId || !userName) {
           return res.status(400).json({ error: 'User ID and name are required' });
@@ -34,6 +34,7 @@ export default async function handler(req, res) {
         const room = {
           id: roomId,
           name: roomName,
+          estimationPreset: estimationPreset || 'scrum',
           createdAt: new Date().toISOString(),
           participants: {
             [userId]: {

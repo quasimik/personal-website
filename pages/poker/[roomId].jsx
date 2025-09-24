@@ -5,7 +5,21 @@ import Layout from '../../components/layout';
 import { v7 as uuidv7 } from 'uuid';
 import styles from '../../styles/poker.module.css';
 
-const FIBONACCI_SERIES = ['0', '1', '2', '3', '5', '8', '13', '21', '?', '☕'];
+// Estimation card presets
+const estimationPresets = {
+  'scrum': {
+    name: 'Scrum',
+    cards: ['0', '½', '1', '2', '3', '5', '8', '13', '20', '40', '100', '?', '☕']
+  },
+  'tshirt': {
+    name: 'T-Shirt Sizes',
+    cards: ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '?']
+  },
+  'custom': {
+    name: 'Custom',
+    cards: []
+  }
+};
 
 export default function PokerRoom() {
   const router = useRouter();
@@ -16,6 +30,7 @@ export default function PokerRoom() {
   const [userName, setUserName] = useState('');
   const [isJoined, setIsJoined] = useState(false);
   const [selectedVote, setSelectedVote] = useState(null);
+  const [selectedPreset, setSelectedPreset] = useState('scrum');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [newTicketDescription, setNewTicketDescription] = useState('');
@@ -54,6 +69,10 @@ export default function PokerRoom() {
         const roomData = await response.json();
         setRoom(roomData);
         setIsJoined(!!roomData.participants?.[userId]);
+        // Set preset from room data if available
+        if (roomData.estimationPreset && estimationPresets[roomData.estimationPreset]) {
+          setSelectedPreset(roomData.estimationPreset);
+        }
       } else {
         setError('Room not found');
       }
@@ -287,9 +306,22 @@ export default function PokerRoom() {
 
                 {!votesRevealed ? (
                   <div className={styles.votingSection}>
+                    <div className={styles.presetSelector}>
+                      <label htmlFor="presetSelect">Estimation Cards:</label>
+                      <select
+                        id="presetSelect"
+                        value={selectedPreset}
+                        onChange={(e) => setSelectedPreset(e.target.value)}
+                        className={styles.presetSelect}
+                      >
+                        {Object.entries(estimationPresets).map(([key, preset]) => (
+                          <option key={key} value={key}>{preset.name}</option>
+                        ))}
+                      </select>
+                    </div>
                     <h3>Cast Your Vote</h3>
                     <div className={styles.votingCards}>
-                      {FIBONACCI_SERIES.map(vote => (
+                      {estimationPresets[selectedPreset].cards.map(vote => (
                         <button
                           key={vote}
                           className={`${styles.voteCard} ${selectedVote === vote ? styles.selected : ''}`}
@@ -310,8 +342,8 @@ export default function PokerRoom() {
                     <div className={styles.votesSummary}>
                       {Object.entries(currentTicket.votes || {})
                         .sort(([a], [b]) => {
-                          const aIndex = FIBONACCI_SERIES.indexOf(a);
-                          const bIndex = FIBONACCI_SERIES.indexOf(b);
+                          const aIndex = estimationPresets[selectedPreset].cards.indexOf(a);
+                          const bIndex = estimationPresets[selectedPreset].cards.indexOf(b);
                           return aIndex - bIndex;
                         })
                         .map(([vote, count]) => (
