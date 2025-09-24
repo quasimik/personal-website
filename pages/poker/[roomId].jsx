@@ -199,8 +199,33 @@ export default function PokerRoom() {
     }
   };
 
-  // Set next ticket
-  const handleNextTicket = async () => {
+  // Accept current ticket with estimate
+  const handleAcceptTicket = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/rooms/${roomId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'accept_ticket',
+          userId,
+          acceptedEstimate: selectedVote
+        })
+      });
+
+      if (response.ok) {
+        setSelectedVote(null);
+        fetchRoom();
+      }
+    } catch (error) {
+      setError('Failed to accept estimate');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Create new ticket without advancing current ticket
+  const handleCreateTicket = async () => {
     if (!newTicketDescription.trim()) {
       setError('Please enter a ticket description');
       return;
@@ -212,7 +237,7 @@ export default function PokerRoom() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action: 'next_ticket',
+          action: 'create_ticket',
           userId,
           ticketDescription: newTicketDescription.trim()
         })
@@ -220,11 +245,10 @@ export default function PokerRoom() {
 
       if (response.ok) {
         setNewTicketDescription('');
-        setSelectedVote(null);
         fetchRoom();
       }
     } catch (error) {
-      setError('Failed to set next ticket');
+      setError('Failed to create ticket');
     } finally {
       setLoading(false);
     }
@@ -280,11 +304,12 @@ export default function PokerRoom() {
               isModerator={isModerator}
               newTicketDescription={newTicketDescription}
               setNewTicketDescription={setNewTicketDescription}
-              handleNextTicket={handleNextTicket}
+              handleCreateTicket={handleCreateTicket}
               handleReveal={handleReveal}
               handleReset={handleReset}
               participants={room.participants}
               userId={userId}
+              handleAcceptTicket={handleAcceptTicket}
             />
 
             <ParticipantsList

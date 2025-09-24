@@ -98,10 +98,14 @@
   padding: 6px;
 }
 
-.pastVoteParticipantName {
-  font-size: 9px;
-  max-width: 80px;
-}
+  .pastVoteParticipantName {
+    font-size: 9px;
+    max-width: 80px;
+  }
+
+  .pastAcceptedEstimate {
+    font-size: 8px;
+  }
 
 .pastVoteValue {
   display: block;
@@ -135,6 +139,15 @@
   max-width: 100px;
   word-wrap: break-word;
   line-height: 1.1;
+}
+
+.pastAcceptedEstimate {
+  display: block;
+  font-size: 9px;
+  color: #28a745;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1px;
 }
 
 .pastVoteCount {
@@ -512,6 +525,20 @@
   margin-bottom: 4px;
 }
 
+.acceptedEstimate {
+  display: block;
+  font-size: 10px;
+  color: #28a745;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.acceptedTicket {
+  border: 2px solid #28a745 !important;
+  background: #f8fff8 !important;
+}
+
 .blankCardValue {
   font-size: 28px;
   color: #666;
@@ -547,6 +574,27 @@
 .resetButton:hover:not(:disabled) {
   background: #f0f0f0;
   border-color: #000;
+}
+
+.acceptButton {
+  padding: 10px 16px;
+  font-size: 14px;
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.acceptButton:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.acceptButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
 }
 
 
@@ -776,5 +824,12 @@
     padding: 12px 16px;
   }
 
+  .blankCardValue {
+    font-size: 18px;
+  }
+
+  .acceptedEstimate {
+    font-size: 9px;
+  }
 
 }

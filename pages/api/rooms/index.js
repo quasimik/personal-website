@@ -53,7 +53,7 @@ export default async function handler(req, res) {
               vote: null
             }
           },
-          currentTicket: null,
+          currentTicket: 0,
           revealed: false,
           tickets: [],
           moderatorId: userId

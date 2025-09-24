@@ -15,11 +15,12 @@ const TicketList = ({
   isModerator,
   newTicketDescription,
   setNewTicketDescription,
-  handleNextTicket,
+  handleCreateTicket,
   handleReveal,
   handleReset,
   participants,
-  userId
+  userId,
+  handleAcceptTicket
 }) => {
   return (
     <div className={styles.ticketsArea}>
@@ -40,6 +41,7 @@ const TicketList = ({
           handleReset={handleReset}
           participants={participants}
           userId={userId}
+          handleAcceptTicket={handleAcceptTicket}
         />
       ))}
 
@@ -47,7 +49,7 @@ const TicketList = ({
         isModerator={isModerator}
         newTicketDescription={newTicketDescription}
         setNewTicketDescription={setNewTicketDescription}
-        handleNextTicket={handleNextTicket}
+        handleCreateTicket={handleCreateTicket}
         loading={loading}
       />
     </div>

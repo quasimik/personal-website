@@ -18,7 +18,8 @@ const TicketRow = ({
   handleReveal,
   handleReset,
   participants,
-  userId
+  userId,
+  handleAcceptTicket
 }) => {
   return (
     <div className={`${styles.ticketRow} ${isCurrent ? styles.currentTicket : styles.pastTicket}`}>
@@ -44,6 +45,7 @@ const TicketRow = ({
               loading={loading}
               handleReveal={handleReveal}
               handleReset={handleReset}
+              handleAcceptTicket={handleAcceptTicket}
             />
           )}
         </div>
@@ -67,8 +69,13 @@ const TicketRow = ({
                     const participantName = participant ? participant.name : participantId;
                     return (
                       <div key={participantId} className={styles.pastVoteResultContainer}>
-                        <div className={styles.pastVoteResult}>
+                        <div className={`${styles.pastVoteResult} ${ticket.acceptedEstimate ? styles.acceptedTicket : ''}`}>
                           <div className={styles.pastVoteValue}>{vote}</div>
+                          {ticket.acceptedEstimate && (
+                            <div className={styles.pastAcceptedEstimate}>
+                              ✓ {ticket.acceptedEstimate}
+                            </div>
+                          )}
                         </div>
                         <div className={styles.pastVoteParticipantName}>
                           {participantName}{participantId === userId ? ' (You)' : ''}

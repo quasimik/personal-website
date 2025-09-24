@@ -4,8 +4,6 @@ import { v7 as uuidv7 } from 'uuid';
 // Initialize Redis
 const redis = Redis.fromEnv();
 
-const FIBONACCI_SERIES = ['0', '1', '2', '3', '5', '8', '13', '21', '?', '☕'];
-
 export default async function handler(req, res) {
   const { roomId } = req.query;
   const { method } = req;
@@ -35,7 +33,7 @@ export default async function handler(req, res) {
 
     case 'POST':
       try {
-        const { action, userId, userName, vote, ticketDescription } = req.body;
+        const { action, userId, userName, vote, ticketDescription, acceptedEstimate } = req.body;
 
         let room = await getRoom();
 
@@ -45,7 +43,7 @@ export default async function handler(req, res) {
             id: roomId,
             createdAt: new Date().toISOString(),
             participants: {},
-            currentTicket: null,
+            currentTicket: 0,
             tickets: [],
             moderatorId: userId
           };
@@ -86,8 +84,23 @@ export default async function handler(req, res) {
             }
             break;
 
-          case 'next_ticket':
-            // Move to next ticket or create a new one
+          case 'accept_ticket':
+            // Accept current ticket with an estimate
+            if (room.currentTicket !== null && room.tickets[room.currentTicket] && acceptedEstimate) {
+              const currentTicket = room.tickets[room.currentTicket];
+              currentTicket.acceptedEstimate = acceptedEstimate;
+              currentTicket.acceptedAt = new Date().toISOString();
+
+              // Find next ticket without an accepted estimate
+              let nextTicketIndex = room.currentTicket + 1;
+              while (nextTicketIndex < room.tickets.length && room.tickets[nextTicketIndex].acceptedEstimate) {
+                nextTicketIndex++;
+              }
+              room.currentTicket = nextTicketIndex;
+            }
+            break;
+
+          case 'create_ticket':
             if (ticketDescription) {
               room.tickets.push({
                 description: ticketDescription,
@@ -95,12 +108,6 @@ export default async function handler(req, res) {
                 revealed: false
               });
             }
-            room.currentTicket = room.tickets.length - 1;
-            room.revealed = false;
-            // Clear all votes
-            Object.keys(room.participants).forEach(participantId => {
-              room.participants[participantId].vote = null;
-            });
             break;
 
           case 'set_ticket':

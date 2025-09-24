@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/poker.module.css';
 
-const NewTicketForm = ({ isModerator, newTicketDescription, setNewTicketDescription, handleNextTicket, loading }) => {
+const NewTicketForm = ({ isModerator, newTicketDescription, setNewTicketDescription, handleCreateTicket, loading }) => {
   if (!isModerator) return null;
 
   return (
@@ -18,7 +18,7 @@ const NewTicketForm = ({ isModerator, newTicketDescription, setNewTicketDescript
             className={styles.newTicketInput}
           />
           <button
-            onClick={handleNextTicket}
+            onClick={handleCreateTicket}
             disabled={loading || !newTicketDescription.trim()}
             className={styles.newTicketButton}
           >

@@ -6,7 +6,8 @@ const ModeratorControls = ({
   allParticipantsVoted,
   loading,
   handleReveal,
-  handleReset
+  handleReset,
+  handleAcceptTicket
 }) => {
   if (!votesRevealed) {
     return (
@@ -26,6 +27,9 @@ const ModeratorControls = ({
     <div className={styles.moderatorControls}>
       <button onClick={handleReset} disabled={loading} className={styles.resetButton}>
         Reset Votes
+      </button>
+      <button onClick={handleAcceptTicket} disabled={loading} className={styles.acceptButton}>
+        Accept Estimate
       </button>
     </div>
   );
