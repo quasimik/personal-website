@@ -263,17 +263,15 @@
   overflow: hidden;
 }
 
-.participantVote {
-  font-weight: bold;
-  color: #1976d2;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-
 .participantStatus {
-  font-size: 14px;
+  font-size: 16px;
   color: #6c757d;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  min-height: 18px;
 }
 
 .votingSection h3 {

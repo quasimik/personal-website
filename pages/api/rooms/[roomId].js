@@ -46,7 +46,6 @@ export default async function handler(req, res) {
             createdAt: new Date().toISOString(),
             participants: {},
             currentTicket: null,
-            revealed: false,
             tickets: [],
             moderatorId: userId
           };
@@ -58,8 +57,7 @@ export default async function handler(req, res) {
               room.participants[userId] = {
                 id: userId,
                 name: userName,
-                joinedAt: new Date().toISOString(),
-                vote: null
+                joinedAt: new Date().toISOString()
               };
             }
             break;

@@ -290,6 +290,7 @@ export default function PokerRoom() {
             <ParticipantsList
               participants={room.participants}
               userId={userId}
+              currentTicket={currentTicket}
             />
           </div>
         )}
