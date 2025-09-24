@@ -138,8 +138,7 @@ export default function ScrumPoker() {
           userId,
           userName: userName.trim(),
           roomName: roomName.trim() || generateRoomName(),
-          cardList: cardList,
-          ticketDescription: 'Sample ticket - click "Next Ticket" to add your first real ticket'
+          cardList: cardList
         })
       });
 

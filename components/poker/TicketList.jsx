@@ -21,21 +21,6 @@ const TicketList = ({
   participants,
   userId
 }) => {
-  if (!tickets || tickets.length === 0) {
-    return (
-      <div className={styles.noTickets}>
-        <h2>No Tickets Yet</h2>
-        <NewTicketForm
-          isModerator={isModerator}
-          newTicketDescription={newTicketDescription}
-          setNewTicketDescription={setNewTicketDescription}
-          handleNextTicket={handleNextTicket}
-          loading={loading}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className={styles.ticketsArea}>
       {tickets.map((ticket, index) => (

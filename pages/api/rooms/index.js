@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 
     case 'POST':
       try {
-        const { userId, userName, roomName, cardList, ticketDescription } = req.body;
+        const { userId, userName, roomName, cardList } = req.body;
 
         if (!userId || !userName) {
           return res.status(400).json({ error: 'User ID and name are required' });
@@ -58,16 +58,6 @@ export default async function handler(req, res) {
           tickets: [],
           moderatorId: userId
         };
-
-        // Add first ticket if provided
-        if (ticketDescription) {
-          room.tickets.push({
-            description: ticketDescription,
-            votes: {},
-            revealed: false
-          });
-          room.currentTicket = 0;
-        }
 
         await redis.set(`room:${roomId}`, room);
         res.status(201).json(room);
