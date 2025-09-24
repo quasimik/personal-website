@@ -9,21 +9,23 @@ import pokerStyles from '/styles/poker.module.css';
 import { v7 as uuidv7 } from 'uuid';
 
 // Room name generator
-const adjectives = [
+const word_prefixes = [
   'Swift', 'Clever', 'Bright', 'Quick', 'Smart', 'Wise', 'Bold', 'Cool', 'Epic', 'Fast',
   'Fresh', 'Fun', 'Great', 'Hot', 'Nice', 'Rad', 'Super', 'Wild', 'Zany', 'Zippy'
 ];
 
-const nouns = [
+const word_suffixes = [
   'Eagle', 'Tiger', 'Lion', 'Bear', 'Wolf', 'Fox', 'Hawk', 'Owl', 'Raven', 'Shark',
   'Whale', 'Dolphin', 'Otter', 'Seal', 'Moose', 'Deer', 'Horse', 'Zebra', 'Giraffe', 'Rhino'
 ];
 
 const generateRoomName = () => {
-  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
-  const noun = nouns[Math.floor(Math.random() * nouns.length)];
-  return `${adj} ${noun}`;
+  const word_prefix = word_prefixes[Math.floor(Math.random() * word_prefixes.length)];
+  const word_suffix = word_suffixes[Math.floor(Math.random() * word_suffixes.length)];
+  return `${word_prefix} ${word_suffix}`;
 };
+
+const pageTitle = 'Scrum Poker';
 
 export default function ScrumPoker() {
   const router = useRouter();
@@ -119,42 +121,33 @@ export default function ScrumPoker() {
   };
 
   return (
-    <Layout>
-      <Head>
-        <title>Scrum Poker - Personal Website</title>
-        <meta name="description" content="Real-time collaborative estimation tool for agile teams" />
-      </Head>
-
-      <div className={utilStyles.headingMd}>
-        <h1>Scrum Poker</h1>
-        <p>
-          A real-time collaborative estimation tool for agile teams. Create rooms, invite your team,
-          and estimate user stories using the Fibonacci sequence in a fun, interactive way.
-        </p>
-        <p>
-          <strong>How it works:</strong> Enter your name, create a room or join an existing one,
-          vote on tickets privately, and reveal results when everyone has voted.
-        </p>
-      </div>
-
+    <Layout title={pageTitle}>
       <section className={utilStyles.headingMd}>
         <div className={pokerStyles.scrumPokerSection}>
           <div className={pokerStyles.createRoom}>
             <h3>Create New Room</h3>
-            <input
-              type="text"
-              placeholder="Room name"
-              value={roomName}
-              onChange={(e) => setRoomName(e.target.value)}
-              className={pokerStyles.roomNameInput}
-            />
-            <input
-              type="text"
-              placeholder="Your name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              className={pokerStyles.nameInput}
-            />
+            <div className={pokerStyles.inputGroup}>
+              <label htmlFor="roomName">Room name</label>
+              <input
+                id="roomName"
+                type="text"
+                placeholder="Room name"
+                value={roomName}
+                onChange={(e) => setRoomName(e.target.value)}
+                className={pokerStyles.roomNameInput}
+              />
+            </div>
+            <div className={pokerStyles.inputGroup}>
+              <label htmlFor="playerName">Your name (can be unique per room)</label>
+              <input
+                id="playerName"
+                type="text"
+                placeholder="Your name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className={pokerStyles.nameInput}
+              />
+            </div>
             <button
               onClick={createRoom}
               disabled={loading}
@@ -184,6 +177,16 @@ export default function ScrumPoker() {
           )}
         </div>
       </section>
+
+      <h3>What is this?</h3>
+      <p>
+        Collaborative estimation tool for agile teams.
+      </p>
+
+      <h3>How to play</h3>
+      <p>
+        Enter your name, create a room or join an existing one, vote on tickets privately, and reveal results when everyone has voted.
+      </p>
     </Layout>
   );
 }

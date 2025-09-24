@@ -289,7 +289,6 @@
 }
 
 .createRoom {
-  text-align: center;
   margin-bottom: 30px;
   padding: 25px;
   background: white;
@@ -301,7 +300,19 @@
   margin-top: 0;
   color: #333;
   font-size: 20px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.inputGroup {
+  margin-bottom: 16px;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
 }
 
 .nameInput {
@@ -309,8 +320,8 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-right: 10px;
-  width: 200px;
+  width: 100%;
+  margin: 0;
 }
 
 .nameInput:focus {
@@ -323,8 +334,8 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  margin-bottom: 15px;
   width: 100%;
+  margin: 0;
 }
 
 .roomNameInput:focus {
@@ -340,6 +351,7 @@
   border: 1px solid #333;
   border-radius: 4px;
   cursor: pointer;
+  margin-top: 8px;
 }
 
 .createButton:hover:not(:disabled) {
@@ -353,9 +365,6 @@
   cursor: not-allowed;
 }
 
-.existingRooms {
-  text-align: center;
-}
 
 .existingRooms h3 {
   color: #333;
@@ -415,7 +424,6 @@
 
 /* Room History Styles */
 .roomHistory {
-  text-align: center;
   margin-top: 40px;
   padding-top: 30px;
   border-top: 2px solid #e9ecef;
@@ -459,13 +467,10 @@
 
   .nameInput {
     width: 100%;
-    margin-right: 0;
-    margin-bottom: 12px;
   }
 
   .roomNameInput {
     width: 100%;
-    margin-bottom: 12px;
   }
 
   .createButton {
