@@ -57,7 +57,22 @@ const TicketRow = ({
         </div>
       ) : (
         <div className={styles.pastTicketContent}>
-          {ticket.revealed ? (
+          {ticket.acceptedEstimate ? (
+            // Show accepted estimate prominently for past tickets
+            <div className={styles.pastResults}>
+              <div className={styles.pastVotesSummary}>
+                <div className={styles.pastAcceptedEstimateContainer}>
+                  <div className={styles.pastAcceptedEstimateDisplay}>
+                    <div className={styles.pastAcceptedEstimateValue}>
+                      {ticket.acceptedEstimate}
+                    </div>
+                    <div className={styles.pastAcceptedEstimateLabel}>Accepted</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : ticket.revealed ? (
+            // Show individual votes for past tickets without accepted estimate
             <div className={styles.pastResults}>
               <div className={styles.pastVotesSummary}>
                 {Object.entries(ticket.votes || {})
@@ -75,13 +90,8 @@ const TicketRow = ({
                     const participantName = participant ? participant.name : participantId;
                     return (
                       <div key={participantId} className={styles.pastVoteResultContainer}>
-                        <div className={`${styles.pastVoteResult} ${ticket.acceptedEstimate ? styles.acceptedTicket : ''}`}>
+                        <div className={styles.pastVoteResult}>
                           <div className={styles.pastVoteValue}>{vote}</div>
-                          {ticket.acceptedEstimate && (
-                            <div className={styles.pastAcceptedEstimate}>
-                              ✓ {ticket.acceptedEstimate}
-                            </div>
-                          )}
                         </div>
                         <div className={styles.pastVoteParticipantName}>
                           {participantName}{participantId === userId ? ' (You)' : ''}
@@ -92,6 +102,7 @@ const TicketRow = ({
               </div>
             </div>
           ) : (
+            // Show "Not yet voted" for tickets that haven't been revealed
             <div className={styles.pastStatus}>Not yet voted</div>
           )}
         </div>
