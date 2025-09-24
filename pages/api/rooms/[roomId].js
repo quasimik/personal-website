@@ -65,8 +65,14 @@ export default async function handler(req, res) {
             break;
 
           case 'vote':
-            if (room.participants[userId]) {
-              room.participants[userId].vote = vote;
+            if (room.participants[userId] && room.currentTicket !== null && room.tickets[room.currentTicket]) {
+              const currentTicket = room.tickets[room.currentTicket];
+              // Initialize votes object if it doesn't exist
+              if (!currentTicket.votes) {
+                currentTicket.votes = {};
+              }
+              // Store vote as participantId => vote
+              currentTicket.votes[userId] = vote;
             }
             break;
 
@@ -76,10 +82,10 @@ export default async function handler(req, res) {
 
           case 'reset':
             room.revealed = false;
-            // Clear all votes
-            Object.keys(room.participants).forEach(participantId => {
-              room.participants[participantId].vote = null;
-            });
+            // Clear votes from current ticket
+            if (room.currentTicket !== null && room.tickets[room.currentTicket]) {
+              room.tickets[room.currentTicket].votes = {};
+            }
             break;
 
           case 'next_ticket':

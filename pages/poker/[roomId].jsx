@@ -248,8 +248,11 @@ export default function PokerRoom() {
 
   const currentTicket = room?.tickets?.[room?.currentTicket];
   const isModerator = room?.moderatorId === userId;
-  const hasVoted = selectedVote || room?.participants?.[userId]?.vote;
-  const allParticipantsVoted = room && Object.values(room.participants).every(p => p.vote !== null);
+  // Check if current user has voted on current ticket
+  const hasVoted = currentTicket?.votes && currentTicket.votes[userId];
+  // Check if all participants have voted
+  const allParticipantsVoted = room && currentTicket?.votes &&
+    Object.keys(currentTicket.votes).length === Object.keys(room.participants).length;
   const votesRevealed = room?.revealed;
 
   return (
@@ -281,12 +284,12 @@ export default function PokerRoom() {
               handleNextTicket={handleNextTicket}
               handleReveal={handleReveal}
               handleReset={handleReset}
+              participants={room.participants}
             />
 
             <ParticipantsList
               participants={room.participants}
               userId={userId}
-              votesRevealed={votesRevealed}
             />
           </div>
         )}

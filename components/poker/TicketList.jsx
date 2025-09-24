@@ -18,7 +18,8 @@ const TicketList = ({
   setNewTicketDescription,
   handleNextTicket,
   handleReveal,
-  handleReset
+  handleReset,
+  participants
 }) => {
   if (!tickets || tickets.length === 0) {
     return (
@@ -53,6 +54,7 @@ const TicketList = ({
           isModerator={isModerator}
           handleReveal={handleReveal}
           handleReset={handleReset}
+          participants={participants}
         />
       ))}
 
