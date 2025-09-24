@@ -48,7 +48,7 @@ export default async function handler(req, res) {
             currentTicket: null,
             revealed: false,
             tickets: [],
-            organizerId: userId
+            moderatorId: userId
           };
         }
 

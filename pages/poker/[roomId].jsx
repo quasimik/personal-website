@@ -219,7 +219,7 @@ export default function PokerRoom() {
   }
 
   const currentTicket = room?.tickets?.[room?.currentTicket];
-  const isOrganizer = room?.organizerId === userId;
+  const isModerator = room?.moderatorId === userId;
   const hasVoted = selectedVote || room?.participants?.[userId]?.vote;
   const allParticipantsVoted = room && Object.values(room.participants).every(p => p.vote !== null);
   const votesRevealed = room?.revealed;
@@ -311,8 +311,8 @@ export default function PokerRoom() {
                   </div>
                 )}
 
-                {isOrganizer && (
-                  <div className={styles.organizerControls}>
+                {isModerator && (
+                  <div className={styles.moderatorControls}>
                     {!votesRevealed ? (
                       <button
                         onClick={handleReveal}
@@ -345,7 +345,7 @@ export default function PokerRoom() {
             ) : (
               <div className={styles.noTicket}>
                 <h2>No Active Ticket</h2>
-                {isOrganizer && (
+                {isModerator && (
                   <div className={styles.createTicket}>
                     <input
                       type="text"
