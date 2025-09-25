@@ -61,6 +61,7 @@ const TicketRow = ({
               cardList={cardList}
               selectedEstimate={selectedEstimate}
               setSelectedEstimate={setSelectedEstimate}
+              votesRevealed={votesRevealed}
             />
           )}
         </div>

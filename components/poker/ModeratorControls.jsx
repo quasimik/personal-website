@@ -10,7 +10,8 @@ const ModeratorControls = ({
   currentTicket,
   cardList,
   selectedEstimate,
-  setSelectedEstimate
+  setSelectedEstimate,
+  votesRevealed
 }) => {
   const hasAcceptedEstimate = currentTicket?.acceptedEstimate;
 
@@ -19,11 +20,11 @@ const ModeratorControls = ({
       <div className={styles.controlGroup}>
         <button
           onClick={handleReveal}
-          disabled={loading}
+          disabled={loading || votesRevealed}
           className={styles.revealButton}
-          title="Reveal votes (cannot be undone except by reset)"
+          title={votesRevealed ? "Votes are already revealed" : "Reveal votes"}
         >
-          Reveal Votes
+          {votesRevealed ? "Votes Revealed" : "Reveal Votes"}
         </button>
 
         <button
