@@ -292,7 +292,7 @@ export default function PokerRoom() {
         <div className={styles.error}>
           <h1>Error</h1>
           <p>{error}</p>
-          <button onClick={() => router.push('/')}>Go Home</button>
+          <button onClick={() => router.push('/projects/poker')}>Back to Poker</button>
         </div>
       </Layout>
     );
@@ -303,7 +303,13 @@ export default function PokerRoom() {
   const votesRevealed = room?.revealed;
 
   return (
-    <Layout title={`Estimation Poker - ${room?.name || `Room ${roomId}`}`}>
+    <Layout
+      title={`Estimation Poker - ${room?.name || `Room ${roomId}`}`}
+      navbarProps={{
+        backLink: "/projects/poker",
+        backText: "Back"
+      }}
+    >
       <div className={styles.pokerRoom}>
         {!isJoined ? (
           <JoinForm
