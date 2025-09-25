@@ -176,6 +176,17 @@ export default function EstimationPoker() {
               />
             </div>
             <div className={pokerStyles.inputGroup}>
+              <label htmlFor="playerName">Your name (unique per room)</label>
+              <input
+                id="playerName"
+                type="text"
+                placeholder="Your name"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className={pokerStyles.nameInput}
+              />
+            </div>
+            <div className={pokerStyles.inputGroup}>
               <label htmlFor="estimationPreset">Estimation Cards</label>
               <select
                 id="estimationPreset"
@@ -228,17 +239,6 @@ export default function EstimationPoker() {
                   </button>
                 </div>
               </div>
-            </div>
-            <div className={pokerStyles.inputGroup}>
-              <label htmlFor="playerName">Your name (can be unique per room)</label>
-              <input
-                id="playerName"
-                type="text"
-                placeholder="Your name"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                className={pokerStyles.nameInput}
-              />
             </div>
             <button
               onClick={createRoom}
