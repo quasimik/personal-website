@@ -303,7 +303,7 @@ export default function PokerRoom() {
   const votesRevealed = room?.revealed;
 
   return (
-    <Layout title={`Scrum Poker - ${room?.name || `Room ${roomId}`}`}>
+    <Layout title={`Estimation Poker - ${room?.name || `Room ${roomId}`}`}>
       <div className={styles.pokerRoom}>
         {!isJoined ? (
           <JoinForm

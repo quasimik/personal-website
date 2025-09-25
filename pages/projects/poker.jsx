@@ -41,9 +41,9 @@ const estimationPresets = {
   }
 };
 
-const pageTitle = 'Scrum Poker';
+const pageTitle = 'Estimation Poker';
 
-export default function ScrumPoker() {
+export default function EstimationPoker() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
@@ -161,7 +161,7 @@ export default function ScrumPoker() {
   return (
     <Layout title={pageTitle}>
       <section className={utilStyles.headingMd}>
-        <div className={pokerStyles.scrumPokerSection}>
+        <div className={pokerStyles.estimationPokerSection}>
           <div className={pokerStyles.createRoom}>
             <h3>Create New Room</h3>
             <div className={pokerStyles.inputGroup}>
