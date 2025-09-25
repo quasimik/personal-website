@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from '../../styles/poker.module.css';
 
 const ModeratorControls = ({
@@ -14,6 +14,27 @@ const ModeratorControls = ({
   votesRevealed
 }) => {
   const hasAcceptedEstimate = currentTicket?.acceptedEstimate;
+
+  // Auto-select most common vote when votes are revealed
+  useEffect(() => {
+    if (votesRevealed && currentTicket?.votes && !hasAcceptedEstimate) {
+      const votes = Object.values(currentTicket.votes);
+      if (votes.length > 0) {
+        // Count frequency of each vote
+        const voteCounts = votes.reduce((counts, vote) => {
+          counts[vote] = (counts[vote] || 0) + 1;
+          return counts;
+        }, {});
+
+        // Find the most common vote(s)
+        const maxCount = Math.max(...Object.values(voteCounts));
+        const mostCommonVotes = cardList.filter(card => voteCounts[card] === maxCount);
+
+        // Select the last most common vote
+        setSelectedEstimate(mostCommonVotes[mostCommonVotes.length - 1]);
+      }
+    }
+  }, [votesRevealed, setSelectedEstimate, hasAcceptedEstimate]);
 
   return (
     <div className={styles.moderatorControls}>
