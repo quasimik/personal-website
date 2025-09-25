@@ -40,6 +40,16 @@
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.acceptedTicketSummary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  margin-top: 0;
+  flex-shrink: 0;
 }
 
 .ticketNumber {
@@ -59,6 +69,27 @@
   margin: 0;
   color: #333;
   line-height: 1.4;
+  flex-basis: 100%;
+}
+
+.userVote {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  padding: 2px 8px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.acceptedEstimate {
+  font-size: 16px;
+  font-weight: 600;
+  color: #28a745;
+  padding: 2px 8px;
+  background: #f8fff8;
+  border-radius: 4px;
+  border: 1px solid #28a745;
 }
 
 /* ===== TICKET CONTENT ===== */
@@ -66,6 +97,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.currentTicketContent:empty {
+  display: none;
 }
 
 .pastTicketContent {
@@ -114,21 +149,30 @@
   padding: 12px;
   text-align: center;
   min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pastUserVote {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  padding: 2px 8px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
 }
 
 .pastAcceptedEstimateValue {
-  font-size: 20px;
-  font-weight: bold;
-  color: #28a745;
-  margin-bottom: 4px;
-}
-
-.pastAcceptedEstimateLabel {
-  font-size: 10px;
-  color: #28a745;
+  font-size: 16px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  color: #28a745;
+  padding: 2px 8px;
+  background: #f8fff8;
+  border-radius: 4px;
+  border: 1px solid #28a745;
 }
 
 /* ===== VOTES ===== */
@@ -849,6 +893,12 @@
     gap: 8px;
   }
 
+  .acceptedTicketSummary {
+    margin-left: 0;
+    margin-top: 8px;
+    justify-content: center;
+  }
+
   .newTicketInputGroup {
     flex-direction: column;
   }
@@ -899,13 +949,12 @@
   .pastAcceptedEstimateDisplay {
     padding: 8px;
     min-width: 100px;
+    flex-direction: column;
+    gap: 8px;
   }
 
+  .pastUserVote,
   .pastAcceptedEstimateValue {
-    font-size: 16px;
-  }
-
-  .pastAcceptedEstimateLabel {
-    font-size: 8px;
+    font-size: 14px;
   }
 }

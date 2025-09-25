@@ -28,9 +28,19 @@ const TicketRow = ({
       <div className={styles.ticketHeader}>
         <span className={styles.ticketNumber}>#{index + 1}</span>
         <span className={styles.ticketDescription}>{ticket.description}</span>
+        {ticket.acceptedEstimate && (
+          <div className={styles.acceptedTicketSummary}>
+            <span className={styles.userVote}>
+              Yours: {ticket.votes && ticket.votes[userId] ? ticket.votes[userId] : 'Not voted'}
+            </span>
+            <span className={styles.acceptedEstimate}>
+              Accepted: {ticket.acceptedEstimate}
+            </span>
+          </div>
+        )}
       </div>
 
-      {isCurrent ? (
+      {isCurrent && !ticket.acceptedEstimate ? (
         <div className={styles.currentTicketContent}>
           <ResultsSection ticket={ticket} participants={participants} userId={userId} votesRevealed={votesRevealed} />
           <VotingSection
@@ -56,44 +66,8 @@ const TicketRow = ({
         </div>
       ) : (
         <div className={styles.pastTicketContent}>
-          {ticket.acceptedEstimate ? (
-            // Show accepted estimate prominently for past tickets
-            <div className={styles.pastResults}>
-              <div className={styles.pastVotesSummary}>
-                <div className={styles.pastAcceptedEstimateContainer}>
-                  <div className={styles.pastAcceptedEstimateDisplay}>
-                    <div className={styles.pastAcceptedEstimateValue}>
-                      {ticket.acceptedEstimate}
-                    </div>
-                    <div className={styles.pastAcceptedEstimateLabel}>Accepted</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : ticket.revealed ? (
-            // Show individual votes for past tickets without accepted estimate
-            <div className={styles.pastResults}>
-              <div className={styles.pastVotesSummary}>
-                {Object.entries(ticket.votes || {})
-                  .map(([participantId, vote]) => {
-                    const participant = Object.values(participants).find(p => p.id === participantId);
-                    const participantName = participant ? participant.name : participantId;
-                    return (
-                      <div key={participantId} className={styles.pastVoteResultContainer}>
-                        <div className={styles.pastVoteResult}>
-                          <div className={styles.pastVoteValue}>{vote}</div>
-                        </div>
-                        <div className={styles.pastVoteParticipantName}>
-                          {participantName}{participantId === userId ? ' (You)' : ''}
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-          ) : (
-            // Show "Not yet voted" for tickets that haven't been revealed
-            <div className={styles.pastStatus}>Not yet voted</div>
+          {!ticket.acceptedEstimate && (
+            <div className={styles.pastStatus}>No estimate</div>
           )}
         </div>
       )}
