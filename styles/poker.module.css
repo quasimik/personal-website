@@ -612,6 +612,36 @@
   border-top: 1px solid #dee2e6;
 }
 
+.controlGroup {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.skipButton {
+  background: #ffc107;
+  color: #212529;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.skipButton:hover:not(:disabled) {
+  background: #e0a800;
+  border-color: #d39e00;
+}
+
+.skipButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
 .revealButton, .resetButton {
   padding: 12px 24px;
   font-size: 16px;
@@ -942,6 +972,15 @@
 
   .acceptedEstimateLabel {
     font-size: 12px;
+  }
+
+  .controlGroup {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skipButton {
+    width: 100%;
   }
 
   .pastAcceptedEstimateDisplay {

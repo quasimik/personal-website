@@ -8,7 +8,6 @@ const TicketList = ({
   currentTicket,
   cardList,
   votesRevealed,
-  allParticipantsVoted,
   loading,
   selectedVote,
   handleVote,
@@ -21,6 +20,7 @@ const TicketList = ({
   participants,
   userId,
   handleAcceptTicket,
+  handleSkipTicket,
   selectedEstimate,
   setSelectedEstimate
 }) => {
@@ -34,7 +34,6 @@ const TicketList = ({
           isCurrent={index === currentTicket}
           cardList={cardList}
           votesRevealed={votesRevealed}
-          allParticipantsVoted={allParticipantsVoted}
           loading={loading}
           selectedVote={selectedVote}
           handleVote={handleVote}
@@ -44,6 +43,7 @@ const TicketList = ({
           participants={participants}
           userId={userId}
           handleAcceptTicket={handleAcceptTicket}
+          handleSkipTicket={handleSkipTicket}
           selectedEstimate={selectedEstimate}
           setSelectedEstimate={setSelectedEstimate}
         />

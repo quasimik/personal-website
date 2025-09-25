@@ -78,14 +78,12 @@ export default async function handler(req, res) {
 
           case 'reset':
             room.revealed = false;
-            // Clear votes from current ticket
             if (room.currentTicket !== null && room.tickets[room.currentTicket]) {
               room.tickets[room.currentTicket].votes = {};
             }
             break;
 
           case 'accept_ticket':
-            // Accept current ticket with an estimate
             if (room.currentTicket !== null && room.tickets[room.currentTicket] && acceptedEstimate) {
               const currentTicket = room.tickets[room.currentTicket];
               currentTicket.acceptedEstimate = acceptedEstimate;
@@ -98,6 +96,18 @@ export default async function handler(req, res) {
               }
               room.currentTicket = nextTicketIndex;
               // Hide votes for the new current ticket
+              room.revealed = false;
+            }
+            break;
+
+          case 'skip_ticket':
+            if (room.currentTicket !== null && room.tickets[room.currentTicket]) {
+              // Find next ticket without an accepted estimate
+              let nextTicketIndex = room.currentTicket + 1;
+              while (nextTicketIndex < room.tickets.length && room.tickets[nextTicketIndex].acceptedEstimate) {
+                nextTicketIndex++;
+              }
+              room.currentTicket = nextTicketIndex;
               room.revealed = false;
             }
             break;

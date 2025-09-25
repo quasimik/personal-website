@@ -2,38 +2,48 @@ import React from 'react';
 import styles from '../../styles/poker.module.css';
 
 const ModeratorControls = ({
-  votesRevealed,
-  allParticipantsVoted,
   loading,
   handleReveal,
   handleReset,
   handleAcceptTicket,
+  handleSkipTicket,
   currentTicket,
   cardList,
   selectedEstimate,
   setSelectedEstimate
 }) => {
-  if (!votesRevealed) {
-    return (
-      <div className={styles.moderatorControls}>
-        <button
-          onClick={handleReveal}
-          disabled={!allParticipantsVoted || loading}
-          className={styles.revealButton}
-        >
-          Reveal Votes
-        </button>
-      </div>
-    );
-  }
-
   const hasAcceptedEstimate = currentTicket?.acceptedEstimate;
 
   return (
     <div className={styles.moderatorControls}>
-      <button onClick={handleReset} disabled={loading} className={styles.resetButton}>
-        Reset Votes
-      </button>
+      <div className={styles.controlGroup}>
+        <button
+          onClick={handleReveal}
+          disabled={loading}
+          className={styles.revealButton}
+          title="Reveal votes (cannot be undone except by reset)"
+        >
+          Reveal Votes
+        </button>
+
+        <button
+          onClick={handleReset}
+          disabled={loading}
+          className={styles.resetButton}
+          title="Reset votes and hide cards"
+        >
+          Reset Votes
+        </button>
+
+        <button
+          onClick={handleSkipTicket}
+          disabled={loading}
+          className={styles.skipButton}
+          title="Skip this ticket without accepting"
+        >
+          Skip Ticket
+        </button>
+      </div>
 
       {!hasAcceptedEstimate && (
         <div className={styles.estimateSelector}>
@@ -53,6 +63,7 @@ const ModeratorControls = ({
             onClick={handleAcceptTicket}
             disabled={loading || !selectedEstimate}
             className={styles.acceptButton}
+            title="Accept this estimate and advance to next ticket"
           >
             Accept
           </button>

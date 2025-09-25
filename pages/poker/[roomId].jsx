@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import Layout from '../../components/layout';
 import { v7 as uuidv7 } from 'uuid';
 import styles from '../../styles/poker.module.css';
@@ -230,6 +229,29 @@ export default function PokerRoom() {
     }
   };
 
+  // Skip current ticket without accepting
+  const handleSkipTicket = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/rooms/${roomId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'skip_ticket',
+          userId
+        })
+      });
+
+      if (response.ok) {
+        fetchRoom();
+      }
+    } catch (error) {
+      setError('Failed to skip ticket');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Create new ticket without advancing current ticket
   const handleCreateTicket = async () => {
     if (!newTicketDescription.trim()) {
@@ -278,11 +300,6 @@ export default function PokerRoom() {
 
   const currentTicket = room?.tickets?.[room?.currentTicket];
   const isModerator = room?.moderatorId === userId;
-  // Check if current user has voted on current ticket
-  const hasVoted = currentTicket?.votes && currentTicket.votes[userId];
-  // Check if all participants have voted
-  const allParticipantsVoted = room && currentTicket?.votes &&
-    Object.keys(currentTicket.votes).length === Object.keys(room.participants).length;
   const votesRevealed = room?.revealed;
 
   return (
@@ -303,7 +320,6 @@ export default function PokerRoom() {
               currentTicket={room.currentTicket}
               cardList={cardList}
               votesRevealed={votesRevealed}
-              allParticipantsVoted={allParticipantsVoted}
               loading={loading}
               selectedVote={selectedVote}
               handleVote={handleVote}
@@ -316,6 +332,7 @@ export default function PokerRoom() {
               participants={room.participants}
               userId={userId}
               handleAcceptTicket={handleAcceptTicket}
+              handleSkipTicket={handleSkipTicket}
               selectedEstimate={selectedEstimate}
               setSelectedEstimate={setSelectedEstimate}
             />

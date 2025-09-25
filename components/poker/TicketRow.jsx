@@ -10,7 +10,6 @@ const TicketRow = ({
   isCurrent,
   cardList,
   votesRevealed,
-  allParticipantsVoted,
   loading,
   selectedVote,
   handleVote,
@@ -20,6 +19,7 @@ const TicketRow = ({
   participants,
   userId,
   handleAcceptTicket,
+  handleSkipTicket,
   selectedEstimate,
   setSelectedEstimate
 }) => {
@@ -42,12 +42,11 @@ const TicketRow = ({
 
           {isModerator && (
             <ModeratorControls
-              votesRevealed={votesRevealed}
-              allParticipantsVoted={allParticipantsVoted}
               loading={loading}
               handleReveal={handleReveal}
               handleReset={handleReset}
               handleAcceptTicket={handleAcceptTicket}
+              handleSkipTicket={handleSkipTicket}
               currentTicket={ticket}
               cardList={cardList}
               selectedEstimate={selectedEstimate}
