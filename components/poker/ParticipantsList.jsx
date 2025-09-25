@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../styles/poker.module.css';
 
 const ParticipantsList = ({ participants, userId, currentTicket }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1000); // Reset after 2 seconds
+    } catch (error) {
+      console.error('Failed to copy link:', error);
+    }
+  };
+
   return (
     <div className={styles.participants}>
       <h3>Participants ({Object.keys(participants).length})</h3>
@@ -19,6 +31,9 @@ const ParticipantsList = ({ participants, userId, currentTicket }) => {
             </div>
           );
         })}
+        <button onClick={handleCopyLink}>
+          {copied ? 'Copied!' : 'Copy room URL'}
+        </button>
       </div>
     </div>
   );
