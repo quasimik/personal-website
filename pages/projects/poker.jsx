@@ -279,6 +279,11 @@ export default function EstimationPoker() {
       <p>
         Enter your name, create a room or join an existing one, vote on tickets privately, and reveal results when everyone has voted.
       </p>
+
+      <h3>How did I make this?</h3>
+      <p>
+        Vibecoded with extreme supervision. Upstash Redis for storage. Inspired by <a href="https://firepoker.app">Firepoker</a>.
+      </p>
     </Layout>
   );
 }
