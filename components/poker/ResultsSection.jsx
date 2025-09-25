@@ -14,8 +14,8 @@ const ResultsSection = ({ ticket, participants, userId, votesRevealed }) => {
             return (
               <div key={participantId} className={styles.voteResultContainer}>
                 <div className={styles.voteResult}>
-                  <div className={`${styles.voteValue} ${!votesRevealed ? styles.blankCardValue : ''}`}>
-                    {votesRevealed ? vote : '🂠'}
+                  <div className={`${styles.voteValue} ${!votesRevealed && participantId !== userId ? styles.blankCardValue : ''}`}>
+                    {votesRevealed || participantId === userId ? vote : '🂠'}
                   </div>
                 </div>
                 <div className={styles.voteParticipantName}>
