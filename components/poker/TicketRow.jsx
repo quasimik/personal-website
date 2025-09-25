@@ -31,7 +31,7 @@ const TicketRow = ({
         {ticket.acceptedEstimate && (
           <div className={styles.acceptedTicketSummary}>
             <span className={styles.userVote}>
-              Yours: {ticket.votes && ticket.votes[userId] ? ticket.votes[userId] : 'Not voted'}
+              You: {ticket.votes && ticket.votes[userId] ? ticket.votes[userId] : 'No vote'}
             </span>
             <span className={styles.acceptedEstimate}>
               Accepted: {ticket.acceptedEstimate}
