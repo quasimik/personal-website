@@ -10,7 +10,7 @@ import Navbar from './navbar'
 const name = 'Michael Liu';
 export const siteTitle = 'Michael\'s Personal Website';
 
-export default function Layout({ children, home, title }) {
+export default function Layout({ children, home, title, navbarProps = {} }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -37,7 +37,7 @@ export default function Layout({ children, home, title }) {
             <h1 className={utilStyles.heading2Xl}>{name}</h1>
           </div>
         ) : (
-          <Navbar title={title} />
+          <Navbar title={title} {...navbarProps} />
         )}
       </header>
       <main>{children}</main>

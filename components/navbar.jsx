@@ -5,11 +5,11 @@ import Link from 'next/link';
 import styles from '../styles/navbar.module.css';
 import utilStyles from '../styles/utils.module.css';
 
-export default function Navbar({ title }) {
+export default function Navbar({ title, backLink = "/", backText = "Back to home" }) {
   return (
     <div className={styles.navbar}>
       <h2>{title}</h2>
-      <Link href="/" className={styles.backLink}>←&ensp;Back to home</Link>
+      <Link href={backLink} className={styles.backLink}>←&ensp;{backText}</Link>
     </div>
   );
 }

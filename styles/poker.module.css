@@ -1,0 +1,1068 @@
+/* ===== LAYOUT ===== */
+.pokerRoom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.roomContent {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+}
+
+.ticketsArea {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== TICKETS ===== */
+.ticketRow {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 16px;
+  background: white;
+}
+
+.currentTicket {
+  border-left: 4px solid #1976d2;
+  background: #f8f9fa;
+}
+
+.pastTicket {
+  border-left: 4px solid #6c757d;
+  opacity: 0.9;
+}
+
+.ticketHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.acceptedTicketSummary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+}
+
+.ticketNumber {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6c757d;
+  background: #e9ecef;
+  padding: 2px 8px;
+  border-radius: 12px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.ticketDescription {
+  flex: 1;
+  font-size: 16px;
+  margin: 0;
+  color: #333;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.userVote {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  padding: 2px 8px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.acceptedEstimate {
+  font-size: 16px;
+  font-weight: 600;
+  color: #28a745;
+  padding: 2px 8px;
+  background: #f8fff8;
+  border-radius: 4px;
+  border: 1px solid #28a745;
+}
+
+/* ===== TICKET CONTENT ===== */
+.currentTicketContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.currentTicketContent:empty {
+  display: none;
+}
+
+.pastTicketContent {
+  margin-top: 8px;
+}
+
+.pastResults {
+  margin-top: 12px;
+}
+
+.pastVotesSummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.pastVoteResultContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 80px;
+}
+
+.pastVoteResult {
+  width: 50px;
+  height: 40px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pastAcceptedEstimateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.pastAcceptedEstimateDisplay {
+  background: #f8fff8;
+  border: 1px solid #28a745;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pastUserVote {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  padding: 2px 8px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.pastAcceptedEstimateValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #28a745;
+  padding: 2px 8px;
+  background: #f8fff8;
+  border-radius: 4px;
+  border: 1px solid #28a745;
+}
+
+/* ===== VOTES ===== */
+.pastVoteValue,
+.voteValue {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.pastVoteValue {
+  font-size: 14px;
+  color: #495057;
+}
+
+.voteValue {
+  font-size: 16px;
+  color: #333;
+}
+
+.pastVoteParticipantName,
+.voteParticipantName {
+  font-size: 10px;
+  color: #6c757d;
+  text-align: center;
+  font-weight: 500;
+  max-width: 100px;
+  word-wrap: break-word;
+  line-height: 1.2;
+}
+
+.pastAcceptedEstimate,
+.acceptedEstimate {
+  display: block;
+  font-size: 14px;
+  color: #28a745;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.pastStatus {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+/* ===== FORMS ===== */
+.newTicketForm {
+  border: 2px dashed #28a745;
+  border-radius: 8px;
+  padding: 16px;
+  background: #f8f9fa;
+  margin-top: 20px;
+}
+
+.newTicketInputGroup {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.newTicketInput {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.newTicketInput:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.newTicketButton {
+  padding: 12px 20px;
+  font-size: 16px;
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.newTicketButton:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.newTicketButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.noTickets {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+}
+
+.noTickets h2 {
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.createFirstTicket {
+  margin-top: 20px;
+}
+
+.createFirstTicket input {
+  padding: 12px;
+  font-size: 16px;
+  margin-right: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 300px;
+}
+
+.createFirstTicket button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.createFirstTicket button:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.createFirstTicket button:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* ===== PARTICIPANTS ===== */
+.participants {
+  min-width: 200px;
+}
+
+.participants h3 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.participantList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.participant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 12px;
+  background: transparent;
+  gap: 16px;
+}
+
+.participantName {
+  color: #333;
+  font-size: 14px;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.participantStatus {
+  font-size: 16px;
+  color: #6c757d;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  min-height: 18px;
+}
+
+/* ===== JOIN FORM ===== */
+.joinForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.joinForm h2 {
+  margin: 0 0 16px 0;
+  text-align: center;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.joinForm input {
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.joinForm input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.joinForm button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 8px;
+}
+
+.joinForm button:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.joinForm button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.joinForm .error {
+  color: #dc3545;
+  text-align: center;
+  margin: 8px 0 0 0;
+  font-size: 14px;
+}
+
+/* ===== WAITING FOR TICKETS MARKER ===== */
+.waitingForTicketsMarker {
+  background: linear-gradient(135deg, #17a2b8, #6f42c1);
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin: 24px 0;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+.waitingForTicketsContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.waitingForTicketsIcon {
+  font-size: 48px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.waitingForTicketsMarker h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.waitingForTicketsMarker p {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
+/* ===== VOTING ===== */
+.votingSection h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.votingCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.voteCard {
+  padding: 12px 8px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #f8f9fa;
+  color: #333;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.voteCard:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.voteCard.selected {
+  background: #e9ecef;
+  border-color: #6c757d;
+}
+
+.voteCard:disabled {
+  background: #f1f3f4;
+  cursor: not-allowed;
+}
+
+/* ===== CARD CONFIGURATION ===== */
+.cardsContainer {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 12px;
+  background: #f8f9fa;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.cardsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cardItem {
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.cardText {
+  font-weight: 500;
+}
+
+.removeCardButton {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeCardButton:hover {
+  color: #c82333;
+}
+
+.addCardSection {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.addCardInput {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.addCardInput:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+.addCardButton {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addCardButton:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.addCardButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* ===== STATUS & RESULTS ===== */
+.voteStatus {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #2e7d32;
+  text-align: center;
+  padding: 10px;
+  background: #f0f8f0;
+  border: 1px solid #2e7d32;
+  border-radius: 4px;
+}
+
+.voteChangeNote {
+  color: #28a745;
+  font-style: italic;
+  margin-left: 4px;
+  font-weight: normal;
+}
+
+.resultsSection {
+  text-align: center;
+}
+
+.resultsSection h3 {
+  color: #333;
+}
+
+.votesSummary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.voteResultContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 90px;
+}
+
+.voteResult {
+  width: 60px;
+  height: 45px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acceptedEstimateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.acceptedEstimateDisplay {
+  background: #f8fff8;
+  border: 2px solid #28a745;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  min-width: 200px;
+}
+
+.acceptedEstimateValue {
+  font-size: 32px;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 8px;
+}
+
+.acceptedEstimateLabel {
+  font-size: 14px;
+  color: #28a745;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.acceptedTicket {
+  border: 2px solid #28a745 !important;
+  background: #f8fff8 !important;
+}
+
+/* ===== MODERATOR CONTROLS ===== */
+.moderatorControls {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #dee2e6;
+}
+
+.controlGroup {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.skipButton {
+  background: #ffc107;
+  color: #212529;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.skipButton:hover:not(:disabled) {
+  background: #e0a800;
+  border-color: #d39e00;
+}
+
+.skipButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Standard button styles */
+.revealButton,
+.resetButton,
+.acceptButton {
+  padding: 12px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.revealButton {
+  background: white;
+  color: #333;
+  border: 1px solid #333;
+}
+
+.revealButton:hover:not(:disabled) {
+  background: #f0f0f0;
+  border-color: #000;
+}
+
+.revealButton:disabled {
+  background: #f5f5f5;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.resetButton {
+  background: white;
+  color: #333;
+  border: 1px solid #333;
+}
+
+.resetButton:hover:not(:disabled) {
+  background: #f0f0f0;
+  border-color: #000;
+}
+
+.acceptButton {
+  background: #28a745;
+  color: white;
+  border: 1px solid #28a745;
+}
+
+.acceptButton:hover:not(:disabled) {
+  background: #218838;
+  border-color: #1e7e34;
+}
+
+.acceptButton:disabled {
+  background: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.estimateSelector {
+  margin-top: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+}
+
+.estimateSelector label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.estimateSelect {
+  width: 100%;
+  padding: 6px 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+}
+
+.estimateSelect:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+}
+
+.blankCardValue {
+  font-size: 28px;
+  color: #666;
+}
+/* ===== HOME PAGE ===== */
+.estimationPokerSection {
+  background: #f8f9fa;
+  padding: 25px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.createRoom {
+  margin-bottom: 30px;
+  padding: 25px;
+  background: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+
+.createRoom h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.inputGroup {
+  margin-bottom: 16px;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+}
+
+.nameInput,
+.roomNameInput {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.nameInput:focus,
+.roomNameInput:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.createButton {
+  padding: 12px 24px;
+  font-size: 16px;
+  background: #333;
+  color: white;
+  border: 1px solid #333;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.createButton:hover:not(:disabled) {
+  background: #555;
+  border-color: #555;
+}
+
+.createButton:disabled {
+  background: #ccc;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.existingRooms h3 {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.roomList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.roomItem {
+  background: white;
+  padding: 12px 16px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  display: block;
+  text-decoration: none;
+  border-left: 3px solid #333;
+}
+
+.roomItem:hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.roomInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.roomName {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+  margin: 0;
+}
+
+.roomMeta {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.error {
+  color: #d32f2f;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* Room History Styles */
+.roomHistory {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 2px solid #e9ecef;
+}
+
+.roomHistory h3 {
+  color: #333;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.roomTimestamp {
+  font-size: 12px;
+  color: #888;
+  font-style: italic;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .roomContent {
+    grid-template-columns: 1fr;
+  }
+
+  .participants {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e9ecef;
+  }
+
+  .votingCards {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 6px;
+  }
+
+  .ticketRow {
+    padding: 12px;
+  }
+
+  .ticketHeader {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .acceptedTicketSummary {
+    margin-left: 0;
+    margin-top: 8px;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .newTicketInputGroup {
+    flex-direction: column;
+  }
+
+  .nameInput,
+  .roomNameInput {
+    width: 100%;
+  }
+
+  .createButton {
+    width: 100%;
+  }
+
+  .roomList {
+    gap: 8px;
+  }
+
+  .roomItem {
+    padding: 12px 16px;
+  }
+
+  .blankCardValue {
+    font-size: 18px;
+  }
+
+  .acceptedEstimateDisplay {
+    padding: 15px;
+    min-width: 150px;
+  }
+
+  .acceptedEstimateValue {
+    font-size: 24px;
+  }
+
+  .acceptedEstimateLabel {
+    font-size: 12px;
+  }
+
+  .controlGroup {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skipButton {
+    width: 100%;
+  }
+
+  .pastAcceptedEstimateDisplay {
+    padding: 8px;
+    min-width: 100px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pastUserVote,
+  .pastAcceptedEstimateValue {
+    font-size: 14px;
+  }
+
+  .acceptedTicketSummary {
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 0;
+    margin-top: 8px;
+    justify-content: center;
+  }
+}

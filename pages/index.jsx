@@ -8,13 +8,19 @@ import utilStyles from '../styles/utils.module.css';
 const projectNames = {
   'halecoin': 'HaleCoin (winner of HackUCI 2018)',
   'mcts': 'Monte Carlo tree search',
+  'poker': 'Estimation poker (vibed)',
 };
 
 const resumeUrl = "https://drive.google.com/file/d/0B0k7_-vr1Q5MbVlGN252V3VaMXc/view?usp=sharing&resourcekey=0-X0IJb_u0Nbdxj77d6Vf1og";
 
 export default function Home() {
+
   return (
     <Layout home>
+      <Head>
+        <title>Personal Website</title>
+      </Head>
+
       <section className={utilStyles.headingMd}>
         <p>I currently work as a full-stack data scientist
           with <a href="https://www.woflow.com">Woflow</a>, an early-stage startup revolutionizing
@@ -26,6 +32,8 @@ export default function Home() {
           Here's my <a href={resumeUrl}>resume</a>, feel free to reach out!
         </p>
       </section>
+
+
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>My projects:</h2>
         <ul className={utilStyles.list}>
@@ -36,6 +44,7 @@ export default function Home() {
           ))}
         </ul>
       </section>
+
     </Layout>
   );
 }
