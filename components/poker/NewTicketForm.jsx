@@ -15,6 +15,7 @@ const NewTicketForm = ({ isModerator, newTicketDescription, setNewTicketDescript
             placeholder="Ticket description"
             value={newTicketDescription}
             onChange={(e) => setNewTicketDescription(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && !loading && newTicketDescription.trim() && handleCreateTicket()}
             className={styles.newTicketInput}
           />
           <button

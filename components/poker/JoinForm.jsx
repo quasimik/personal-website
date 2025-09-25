@@ -10,6 +10,8 @@ const JoinForm = ({ userName, setUserName, handleJoin, loading, error }) => {
         placeholder="Your name"
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && !loading && handleJoin()}
+        disabled={loading}
       />
       <button onClick={handleJoin} disabled={loading}>
         {loading ? 'Joining...' : 'Join Room'}
