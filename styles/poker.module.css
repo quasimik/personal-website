@@ -1,3 +1,4 @@
+/* ===== LAYOUT ===== */
 .pokerRoom {
   max-width: 1200px;
   margin: 0 auto;
@@ -16,6 +17,7 @@
   gap: 16px;
 }
 
+/* ===== TICKETS ===== */
 .ticketRow {
   border: 1px solid #dee2e6;
   border-radius: 8px;
@@ -59,6 +61,7 @@
   line-height: 1.4;
 }
 
+/* ===== TICKET CONTENT ===== */
 .currentTicketContent {
   display: flex;
   flex-direction: column;
@@ -85,10 +88,6 @@
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  min-width: 100px;
-}
-
-.pastVoteResultContainer {
   min-width: 80px;
 }
 
@@ -96,95 +95,80 @@
   width: 50px;
   height: 40px;
   padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-  .pastVoteParticipantName {
-    font-size: 9px;
-    max-width: 80px;
-  }
+.pastAcceptedEstimateContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-  .pastAcceptedEstimate {
-    font-size: 8px;
-  }
+.pastAcceptedEstimateDisplay {
+  background: #f8fff8;
+  border: 1px solid #28a745;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+  min-width: 120px;
+}
 
-  .pastAcceptedEstimateContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
+.pastAcceptedEstimateValue {
+  font-size: 20px;
+  font-weight: bold;
+  color: #28a745;
+  margin-bottom: 4px;
+}
 
-  .pastAcceptedEstimateDisplay {
-    background: #f8fff8;
-    border: 1px solid #28a745;
-    border-radius: 6px;
-    padding: 12px;
-    text-align: center;
-    min-width: 120px;
-  }
+.pastAcceptedEstimateLabel {
+  font-size: 10px;
+  color: #28a745;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-  .pastAcceptedEstimateValue {
-    font-size: 20px;
-    font-weight: bold;
-    color: #28a745;
-    margin-bottom: 4px;
-  }
-
-  .pastAcceptedEstimateLabel {
-    font-size: 10px;
-    color: #28a745;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+/* ===== VOTES ===== */
+.pastVoteValue,
+.voteValue {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
 
 .pastVoteValue {
-  display: block;
   font-size: 14px;
-  font-weight: bold;
   color: #495057;
-  margin-bottom: 1px;
 }
 
 .voteValue {
   font-size: 16px;
+  color: #333;
 }
 
-.voteParticipant {
-  font-size: 11px;
-}
-
-.pastVoteParticipant {
-  display: block;
-  font-size: 11px;
-  color: #6c757d;
-  margin-bottom: 3px;
-  font-weight: 500;
-}
-
-.pastVoteParticipantName {
+.pastVoteParticipantName,
+.voteParticipantName {
   font-size: 10px;
   color: #6c757d;
   text-align: center;
   font-weight: 500;
   max-width: 100px;
   word-wrap: break-word;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
-.pastAcceptedEstimate {
+.pastAcceptedEstimate,
+.acceptedEstimate {
   display: block;
   font-size: 9px;
   color: #28a745;
   font-weight: bold;
   text-align: center;
-  margin-top: 1px;
-}
-
-.pastVoteCount {
-  display: block;
-  font-size: 12px;
-  color: #6c757d;
+  margin-top: 2px;
 }
 
 .pastStatus {
@@ -197,6 +181,7 @@
   border: 1px solid #dee2e6;
 }
 
+/* ===== FORMS ===== */
 .newTicketForm {
   border: 2px dashed #28a745;
   border-radius: 8px;
@@ -293,6 +278,7 @@
   cursor: not-allowed;
 }
 
+/* ===== PARTICIPANTS ===== */
 .participants {
   min-width: 200px;
 }
@@ -339,6 +325,7 @@
   min-height: 18px;
 }
 
+/* ===== VOTING ===== */
 .votingSection h3 {
   margin-top: 0;
   color: #333;
@@ -367,7 +354,7 @@
   justify-content: center;
 }
 
-.voteCard:hover {
+.voteCard:hover:not(:disabled) {
   background: #e9ecef;
   border-color: #adb5bd;
 }
@@ -382,6 +369,7 @@
   cursor: not-allowed;
 }
 
+/* ===== CARD CONFIGURATION ===== */
 .cardsContainer {
   border: 1px solid #dee2e6;
   border-radius: 4px;
@@ -473,6 +461,7 @@
   cursor: not-allowed;
 }
 
+/* ===== STATUS & RESULTS ===== */
 .voteStatus {
   margin-top: 15px;
   font-weight: bold;
@@ -512,57 +501,16 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  min-width: 120px;
+  min-width: 90px;
 }
 
-  .voteResultContainer {
-    min-width: 90px;
-  }
-
-  .voteResult {
-    width: 60px;
-    height: 45px;
-    padding: 8px;
-  }
-
-  .voteParticipantName {
-    font-size: 10px;
-    max-width: 90px;
-  }
-
-.voteParticipant {
-  display: block;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 4px;
-  font-weight: 500;
-}
-
-.voteParticipantName {
-  font-size: 11px;
-  color: #6c757d;
-  text-align: center;
-  font-weight: 500;
-  max-width: 120px;
-  word-wrap: break-word;
-  line-height: 1.2;
-}
-
-.voteValue {
-  display: block;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 4px;
-}
-
-.acceptedEstimate {
-  display: block;
-  font-size: 10px;
-  color: #28a745;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 2px;
+.voteResult {
+  width: 60px;
+  height: 45px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .acceptedEstimateContainer {
@@ -601,11 +549,7 @@
   background: #f8fff8 !important;
 }
 
-.blankCardValue {
-  font-size: 28px;
-  color: #666;
-}
-
+/* ===== MODERATOR CONTROLS ===== */
 .moderatorControls {
   margin-top: 25px;
   padding-top: 20px;
@@ -642,15 +586,21 @@
   cursor: not-allowed;
 }
 
-.revealButton, .resetButton {
-  padding: 12px 24px;
-  font-size: 16px;
-  border: 1px solid #333;
+/* Standard button styles */
+.revealButton,
+.resetButton,
+.acceptButton {
+  padding: 12px 16px;
+  font-size: 14px;
   border-radius: 4px;
   cursor: pointer;
-  margin-right: 10px;
+  transition: all 0.2s;
+}
+
+.revealButton {
   background: white;
   color: #333;
+  border: 1px solid #333;
 }
 
 .revealButton:hover:not(:disabled) {
@@ -661,6 +611,13 @@
 .revealButton:disabled {
   background: #f5f5f5;
   border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.resetButton {
+  background: white;
+  color: #333;
+  border: 1px solid #333;
 }
 
 .resetButton:hover:not(:disabled) {
@@ -669,13 +626,9 @@
 }
 
 .acceptButton {
-  padding: 10px 16px;
-  font-size: 14px;
   background: #28a745;
   color: white;
   border: 1px solid #28a745;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 .acceptButton:hover:not(:disabled) {
@@ -705,31 +658,27 @@
   color: #333;
 }
 
-  .estimateSelect {
-    width: 100%;
-    padding: 6px 8px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: white;
-  }
+.estimateSelect {
+  width: 100%;
+  padding: 6px 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+}
 
-  .estimateSelect:focus {
-    outline: none;
-    border-color: #28a745;
-    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
-  }
+.estimateSelect:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25);
+}
 
-  .estimateSelector {
-    min-width: 180px;
-    padding: 10px;
-  }
-
-
-
-
-/* Home page styles */
+.blankCardValue {
+  font-size: 28px;
+  color: #666;
+}
+/* ===== HOME PAGE ===== */
 .scrumPokerSection {
   background: #f8f9fa;
   padding: 25px;
@@ -764,20 +713,7 @@
   color: #555;
 }
 
-.nameInput {
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-  margin: 0;
-}
-
-.nameInput:focus {
-  outline: none;
-  border-color: #666;
-}
-
+.nameInput,
 .roomNameInput {
   padding: 12px;
   font-size: 16px;
@@ -786,6 +722,7 @@
   width: 100%;
 }
 
+.nameInput:focus,
 .roomNameInput:focus {
   outline: none;
   border-color: #666;
@@ -811,7 +748,6 @@
   border-color: #ccc;
   cursor: not-allowed;
 }
-
 
 .existingRooms h3 {
   color: #333;
@@ -862,7 +798,6 @@
   white-space: nowrap;
 }
 
-
 .error {
   color: #d32f2f;
   margin-top: 12px;
@@ -888,21 +823,7 @@
   font-style: italic;
 }
 
-.roomNameInput {
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  width: 100%;
-}
-
-.roomNameInput:focus {
-  outline: none;
-  border-color: #666;
-}
-
-/* Responsive design */
+/* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 768px) {
   .roomContent {
     grid-template-columns: 1fr;
@@ -912,7 +833,6 @@
     margin-top: 20px;
     padding-top: 16px;
     border-top: 1px solid #e9ecef;
-    min-width: 200px;
   }
 
   .votingCards {
@@ -933,10 +853,7 @@
     flex-direction: column;
   }
 
-  .nameInput {
-    width: 100%;
-  }
-
+  .nameInput,
   .roomNameInput {
     width: 100%;
   }
@@ -955,10 +872,6 @@
 
   .blankCardValue {
     font-size: 18px;
-  }
-
-  .acceptedEstimate {
-    font-size: 9px;
   }
 
   .acceptedEstimateDisplay {
@@ -995,5 +908,4 @@
   .pastAcceptedEstimateLabel {
     font-size: 8px;
   }
-
 }
