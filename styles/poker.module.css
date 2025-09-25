@@ -430,6 +430,44 @@
   font-size: 14px;
 }
 
+/* ===== WAITING FOR TICKETS MARKER ===== */
+.waitingForTicketsMarker {
+  background: linear-gradient(135deg, #17a2b8, #6f42c1);
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin: 24px 0;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+}
+
+.waitingForTicketsContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.waitingForTicketsIcon {
+  font-size: 48px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.waitingForTicketsMarker h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.waitingForTicketsMarker p {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.9;
+  font-weight: 400;
+}
+
 /* ===== VOTING ===== */
 .votingSection h3 {
   margin-top: 0;

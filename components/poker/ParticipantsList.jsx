@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../../styles/poker.module.css';
 
-const ParticipantsList = ({ participants, userId, currentTicket }) => {
+const ParticipantsList = ({ participants, userId, currentTicket, waitingForTickets }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyLink = async () => {
@@ -26,7 +26,7 @@ const ParticipantsList = ({ participants, userId, currentTicket }) => {
                 {participant.name}{participant.id === userId ? ' (You)' : ''}
               </span>
               <span className={styles.participantStatus}>
-                {hasVoted ? '✅' : '⏳'}
+                {waitingForTickets ? '🎉' : (hasVoted ? '✅' : '⏳')}
               </span>
             </div>
           );

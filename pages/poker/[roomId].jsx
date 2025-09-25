@@ -347,6 +347,7 @@ export default function PokerRoom() {
               participants={room.participants}
               userId={userId}
               currentTicket={currentTicket}
+              waitingForTickets={room.currentTicket >= room.tickets.length}
             />
           </div>
         )}

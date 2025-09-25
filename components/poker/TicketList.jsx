@@ -24,6 +24,9 @@ const TicketList = ({
   selectedEstimate,
   setSelectedEstimate
 }) => {
+  // Check if waiting for more tickets (either no tickets or all done)
+  const waitingForTickets = currentTicket >= tickets.length;
+
   return (
     <div className={styles.ticketsArea}>
       {tickets.map((ticket, index) => (
@@ -48,6 +51,16 @@ const TicketList = ({
           setSelectedEstimate={setSelectedEstimate}
         />
       ))}
+
+      {waitingForTickets && (
+        <div className={styles.waitingForTicketsMarker}>
+          <div className={styles.waitingForTicketsContent}>
+            <span className={styles.waitingForTicketsIcon}>🎉</span>
+            <h3>All tickets processed!</h3>
+            <p>Waiting for more tickets...</p>
+          </div>
+        </div>
+      )}
 
       <NewTicketForm
         isModerator={isModerator}
