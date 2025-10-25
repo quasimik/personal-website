@@ -282,7 +282,7 @@ export default function EstimationPoker() {
 
       <h3>How did I make this?</h3>
       <p>
-        Vibecoded with extreme supervision. Upstash Redis for storage. Inspired by <a href="https://firepoker.app">Firepoker</a>.
+        Inspired by <a href="https://firepoker.app">Firepoker</a>. User ID stored in local storage. Upstash Redis for remote storage.
       </p>
     </Layout>
   );
